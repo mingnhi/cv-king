@@ -6,12 +6,23 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { ChevronRight, HomeIcon } from "lucide-react";
 
-const BreadcrumbTabActive = () => {
+type BreadcrumbItemType = {
+  name: string;
+  link?: string;
+};
+
+
+type Props = {
+  items: BreadcrumbItemType[];
+};
+
+
+const BreadcrumbTabActive: React.FC<Props> = ({items}) => {
   const { currentPath } = useBreadcrumb();
 
   return (
     <Breadcrumbs
-      separator={<ChevronRight fontSize="small" className="text-gray-500" />}
+      separator={<ChevronRight fontSize="small" className="text-gray-500 font-light size-5" />}
       aria-label="breadcrumb"
       className="mb-8 text-xs text-gray-500"
     >
@@ -23,8 +34,8 @@ const BreadcrumbTabActive = () => {
         <HomeIcon className="h-4 w-4 mr-1 text-gray-400 hover:text-orange-400" /> 
         
       </Link>
-      {currentPath.map((item, index) => {
-        const isLast = index === currentPath.length - 1;
+      {items.map((item, index) => {
+        const isLast = index === items.length - 1;
         return (
           <div key={index} className="flex items-center">
             {isLast ? (
@@ -34,10 +45,10 @@ const BreadcrumbTabActive = () => {
             ) : (
               <Link
                 component={NextLink}
-                href={item.link}
+                href={item.link|| "#"}
                 className="text-xs no-underline"
               >
-                <span className="h-4 w-4 mr-1 text-gray-400 hover:text-orange-400">{item.name}</span>
+                <span className="h-4 w-4  text-gray-400 hover:text-orange-400">{item.name}</span>
               </Link>
             )}
           </div>
