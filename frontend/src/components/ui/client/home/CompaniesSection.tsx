@@ -195,7 +195,7 @@ const CompaniesSection: React.FC = () => {
       setFollowedCompanies(JSON.parse(savedFollowed));
     }
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem(
       "followedCompanies",
