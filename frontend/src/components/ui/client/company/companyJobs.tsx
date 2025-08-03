@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { jobs } from "@/faker/jobs-data";
+import { jobs } from "@/faker/jobscompany-data";
+import { Briefcase, CalendarDays, Clock8, MapPin } from "lucide-react";
 
 const CompanyJobs: React.FC = () => {
     return (
         <div className="bg-[#fff7ef] rounded-xl shadow p-4 mt-4 border border-blue-200">
             <h3 className="text-base font-semibold mb-2 flex items-center gap-2">
-                <span className="material-icons text-lg">workic</span>
+                <span className="material-icons text-lg"><Briefcase /></span>
                 Vị trí tuyển dụng
             </h3>
             <div className="flex flex-col gap-4">
@@ -19,17 +20,17 @@ const CompanyJobs: React.FC = () => {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <div className="font-bold text-[17px] text-[#222]">{job.title}</div>
-                                    <div className="flex gap-2 text-[13px] text-gray-600 mt-1">
-                                        <span className="flex items-center gap-1">
-                                            <span className="material-icons text-[15px]">ic</span>
+                                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-gray-600 mt-1">
+                                        <span className="flex items-center gap-1 min-w-[120px]">
+                                            <MapPin className="w-4 h-4" />
                                             {job.location}
                                         </span>
-                                        <span className="flex items-center gap-1">
-                                            <span className="material-icons text-[15px]">ic</span>
+                                        <span className="flex items-center gap-1 min-w-[120px]">
+                                            <Clock8 className="w-4 h-4" />
                                             {job.type}
                                         </span>
-                                        <span className="flex items-center gap-1">
-                                            <span className="material-icons text-[15px]">ic</span>
+                                        <span className="flex items-center gap-1 w-full sm:w-auto">
+                                            <CalendarDays className="w-4 h-4" />
                                             Hạn nộp: {job.deadline}
                                         </span>
                                     </div>

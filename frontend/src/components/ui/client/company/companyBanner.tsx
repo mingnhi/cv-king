@@ -16,7 +16,7 @@ const CompanyBanner = ({
     subtitle,
 }: CompanyBannerProps) => {
     return (
-        <div className="w-full h-48 md:h-60 lg:h-72 relative flex items-center overflow-hidden rounded-b-2xl shadow-md bg-transparent">
+        <div className="w-full h-48 md:h-60 lg:h-72 relative flex items-center overflow-hidden shadow-md bg-transparent">
             <Image
                 src={image ?? imageCompany}
                 alt={alt}
