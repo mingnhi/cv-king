@@ -9,11 +9,14 @@ import TodayJobsStatSection from "@/components/ui/client/home/TodayJobsStatSecti
 const HomePage = () => {
   return (
     <>
+                <div className="w-[1520px] mx-auto">
       <SearchSection />
       <JobsSection />
       <HeroSection />
       <CompaniesSection />
       <TodayJobsStatSection />
+
+</div>
     </>
   );
 };
