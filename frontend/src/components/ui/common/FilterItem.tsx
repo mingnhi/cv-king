@@ -75,7 +75,7 @@ const FilterItem: React.FC<FilterItemProps> = ({
   const menuWidth = filterBoxRef.current?.offsetWidth || "auto";
 
   return (
-    <Box className="w-full">
+    <Box className="w-[400px] ml-0">
       <Box
         className={`
           w-full flex flex-col gap-2 sm:flex-row sm:items-center

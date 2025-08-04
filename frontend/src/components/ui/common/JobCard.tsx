@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import { Box, Card, CardContent, IconButton, Typography } from "@mui/material";
-import { Heart } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
-
+import { Bookmark } from "lucide-react";
 interface Job {
   id: string;
   image: string | StaticImageData;
@@ -39,7 +38,9 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
           borderColor: "orange",
         },
         minHeight: "100%",
-        wdth: "100%",
+                width :340,
+                height :221,
+                marginLeft :"10px",
       }}
       role="button"
       tabIndex={0}
@@ -139,9 +140,9 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
             size="small"
           >
             {isFavorite ? (
-              <Heart className="text-orange-400 fill-orange-600 w-5 h-5" />
+              <Bookmark className="text-orange-400 fill-orange-600 w-5 h-5" />
             ) : (
-              <Heart className="text-orange-400 w-5 h-5" />
+              <Bookmark className="text-orange-400 w-5 h-5" />
             )}
           </IconButton>
         </Box>
