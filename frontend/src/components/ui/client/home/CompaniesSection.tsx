@@ -1,253 +1,293 @@
 "use client";
+import React, { useState } from 'react';
 
-import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import SubFilter from "@/components/ui/common/SubFilterItem";
-import CompanyCard from "@/components/ui/common/CompanyCard";
-import imageCompany from "@/assets/images/jobstat1.png";
-import PaginationItem from "../../common/PaginationItem";
-const INDUSTRIES = [
-  "Tất cả",
-  "Ngân hàng",
-  "Bất động sản",
-  "Xây dựng",
-  "IT - Phần mềm",
-  "Tài chính",
-  "Bán lẻ - Hàng tiêu dùng - FMCG",
-  "Sản xuất",
-  "Logistics - Vận tải",
-  "Viễn thông",
-  "Bảo hiểm",
-  "Nhà hàng / Khách sạn",
-  "IT - Phần cứng",
-  "Marketing / Truyền thông / Quảng cáo",
-  "Chứng khoán",
-  "Điện tử / Điện lạnh",
-  "Xuất nhập khẩu",
-  "Thương mại điện tử",
-  "Dược phẩm / Y tế / Công nghệ sinh học",
-  "Tư vấn",
-];
+import { Heart, Bookmark, MapPin, DollarSign, Clock, Building } from 'lucide-react';
 
-const COMPANIES = [
-  {
-    id: "1",
-    name: "Techcombank",
-    industry: "Ngân hàng",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 88,
-    description:
-      "Ngân hàng hàng đầu tại Việt Nam với các dịch vụ tài chính hiện đại.",
-  },
-  {
-    id: "2",
-    name: "Vingroup",
-    industry: "Bất động sản",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 120,
-    description:
-      "Tập đoàn bất động sản và dịch vụ hàng đầu Việt Nam, phát triển các dự án Vinhomes và Vincom.",
-  },
-  {
-    id: "3",
-    name: "FPT Software",
-    industry: "IT - Phần mềm",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 250,
-    description:
-      "Công ty công nghệ thông tin lớn nhất Việt Nam, chuyên về phát triển phần mềm và chuyển đổi số.",
-  },
-  {
-    id: "4",
-    name: "Vinamilk",
-    industry: "Bán lẻ - Hàng tiêu dùng - FMCG",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 60,
-    description:
-      "Thương hiệu sữa và sản phẩm tiêu dùng hàng đầu, xuất khẩu sang hơn 50 quốc gia.",
-  },
-  {
-    id: "5",
-    name: "Tập đoàn Hoà Phát",
-    industry: "Sản xuất",
-    image: imageCompany,
-    location: "Hải Dương",
-    totalJobs: 90,
-    description:
-      "Nhà sản xuất thép và vật liệu xây dựng hàng đầu Việt Nam, tiên phong trong sản xuất xanh.",
-  },
-  {
-    id: "6",
-    name: "Viettel",
-    industry: "Viễn thông",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 150,
-    description:
-      "Tập đoàn viễn thông lớn nhất Việt Nam, cung cấp dịch vụ di động và giải pháp công nghệ.",
-  },
-  {
-    id: "7",
-    name: "Shopee Việt Nam",
-    industry: "Thương mại điện tử",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 200,
-    description:
-      "Nền tảng thương mại điện tử hàng đầu, cung cấp trải nghiệm mua sắm trực tuyến tiện lợi.",
-  },
-  {
-    id: "8",
-    name: "Tập đoàn Sun Group",
-    industry: "Nhà hàng / Khách sạn",
-    image: imageCompany,
-    location: "Đà Nẵng",
-    totalJobs: 75,
-    description:
-      "Tập đoàn phát triển du lịch và khách sạn cao cấp, sở hữu các khu nghỉ dưỡng như InterContinental Danang.",
-  },
-  {
-    id: "9",
-    name: "VPBank",
-    industry: "Tài chính",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 100,
-    description:
-      "Ngân hàng thương mại hàng đầu, cung cấp các giải pháp tài chính cá nhân và doanh nghiệp.",
-  },
-  {
-    id: "10",
-    name: "TMA Solutions",
-    industry: "IT - Phần mềm",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 180,
-    description:
-      "Công ty gia công phần mềm quốc tế, chuyên cung cấp giải pháp công nghệ cho khách hàng toàn cầu.",
-  },
-  {
-    id: "11",
-    name: "Bamboo Airways",
-    industry: "Logistics - Vận tải",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 50,
-    description:
-      "Hãng hàng không tư nhân, cung cấp dịch vụ vận tải hàng không chất lượng cao.",
-  },
-];
-const CompaniesSection: React.FC = () => {
-  const [selectedSubFilter, setSelectedSubFilter] = useState<string>("Tất cả");
+const CompaniesSection = () => {
+  const [activeTab, setActiveTab] = useState('Tất cả');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
-  // Thêm trạng thái để quản lý danh sách công ty được theo dõi
-  const [followedCompanies, setFollowedCompanies] = useState<string[]>([]);
 
-  useEffect(() => {
-    const updatePageSize = () => {
-      const width = window.innerWidth;
-      setPageSize(width < 640 ? 4 : 9);
-    };
-    updatePageSize();
-    window.addEventListener("resize", updatePageSize);
-    return () => window.removeEventListener("resize", updatePageSize);
-  }, []);
+  const tabs = [
+    'Tất cả',
+    'Ngân hàng',
+    'Bất Động sản',
+    'Xây dựng',
+    'IT - Phần mềm',
+    'logistics-vận tải'
+  ];
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedSubFilter]);
+  const jobData = [
+    {
+      id: 1,
+      company: 'Techcombank',
+      type: 'Ngân hàng • Công ty niêm yết',
+      rating: 4.4,
+      reviews: 1234,
+      urgent: true,
+      featured: false,
+      location: 'Hà Nội, TP.HCM, Đà Nẵng',
+      salary: '10 - 20 triệu',
+      experience: 'Toàn thời gian-Hybrid',
+      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
+      benefits: [
+        'Bảo hiểm xã hội theo cơ chế',
+        'Thưởng hiệu quả 2-6 tháng lương',
+        'Đào tạo & phát triển nghề nghiệp',
+        'Nghỉ phép 15 ngày/năm'
+      ],
+      postedDate: '31/07/2025 lúc 14 h30'
+    },
+    {
+      id: 2,
+      company: 'Techcombank',
+      type: 'Ngân hàng • Công ty niêm yết',
+      rating: 4.8,
+      reviews: 1234,
+      urgent: false,
+      featured: true,
+      location: 'Hà Nội, TP.HCM, Đà Nẵng',
+      salary: '12 - 20 triệu',
+      experience: 'Toàn thời gian-Hybrid',
+      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
+      benefits: [
+        'Bảo hiểm xã hội theo cơ chế',
+        'Thưởng hiệu quả 2-6 tháng lương',
+        'Đào tạo & phát triển nghề nghiệp',
+        'Nghỉ phép 15 ngày/năm'
+      ],
+      postedDate: '31/07/2025 lúc 14 h30'
+    },
+    {
+      id: 3,
+      company: 'Techcombank',
+      type: 'Ngân hàng • Công ty niêm yết',
+      rating: 4.8,
+      reviews: 1234,
+      urgent: true,
+      featured: false,
+      location: 'Hà Nội, TP.HCM, Đà Nẵng',
+      salary: '10 - 20 triệu',
+      experience: 'Toàn thời gian-Hybrid',
+      skills: ['Chuyên viên khách hàng', 'Business Analyst'],
+      benefits: [
+        'Bảo hiểm xã hội theo cơ chế',
+        'Thưởng hiệu quả 2-6 tháng lương',
+        'Đào tạo & phát triển nghề nghiệp',
+        'Nghỉ phép 15 ngày/năm'
+      ],
+      postedDate: '31/07/2025 lúc 14 h30'
+    },
+    {
+      id: 4,
+      company: 'Techcombank',
+      type: 'Ngân hàng • Công ty niêm yết',
+      rating: 4.0,
+      reviews: 1234,
+      urgent: false,
+      featured: true,
+      location: 'Hà Nội, TP.HCM, Đà Nẵng',
+      salary: '10 - 20 triệu',
+      experience: 'Toàn thời gian-Hybrid',
+      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
+      benefits: [
+        'Bảo hiểm xã hội theo cơ chế',
+        'Thưởng hiệu quả 2-6 tháng lương',
+        'Đào tạo & phát triển nghề nghiệp',
+        'Nghỉ phép 15 ngày/năm'
+      ],
+      postedDate: '31/07/2025 lúc 14 h30'
+    }
+  ];
 
-  const filteredCompanies =
-    selectedSubFilter === "Tất cả"
-      ? COMPANIES
-      : COMPANIES.filter((company) => company.industry === selectedSubFilter);
+  const JobCard = ({ job }) => (
+    <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+            <Building className="w-6 h-6 text-orange-600" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-900">{job.company}</h3>
+            <p className="text-sm text-gray-600">{job.type}</p>
+            <div className="flex items-center gap-1 mt-1">
+              <span className="text-yellow-400">★</span>
+              <span className="text-sm font-medium">{job.rating}</span>
+              <span className="text-sm text-gray-500">({job.reviews} reviews)</span>
+            </div>
+                         <div className="flex gap-2 mt-2">
+              {job.urgent && (
+                <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium">
+                  Gấp
+                </span>
+              )}
+              {job.featured && (
+                <span className="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs font-medium">
+                  Hot job
+                </span>
+              )}
+              <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
+                Tuyển gấp
+              </span>
+            </div>
+          </div>
+        </div>
 
-  const totalPages = Math.ceil(filteredCompanies.length / pageSize);
+      </div>
 
-  const paginatedCompanies = filteredCompanies.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+      {/* Job Details */}
+      <div className="space-y-2 mb-4">
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <MapPin className="w-4 h-4" />
+          <span>{job.location}</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <DollarSign className="w-4 h-4" />
+          <span>{job.salary}</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <Clock className="w-4 h-4" />
+          <span>{job.experience}</span>
+        </div>
+      </div>
+
+      {/* Skills */}
+      <div className="mb-4">
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Vị trí đang tuyển:</h4>
+        <div className="flex flex-wrap gap-2">
+          {job.skills.map((skill, index) => (
+            <span
+              key={index}
+              className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm border"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Benefits */}
+      <div className="mb-4">
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Phúc lợi nổi bật:</h4>
+        <ul className="space-y-1">
+          {job.benefits.map((benefit, index) => (
+            <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
+              <span className="text-green-500 mt-1">•</span>
+              <span>{benefit}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <button className="bg-[#F6E2CC] hover:bg-orange-600 text-[#CD6D00] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 w-[230px h-[30px],">
+          Xem việc làm
+          <span>→</span>
+        </button>
+        <div className="flex items-center gap-3">
+          <button className="p-2 hover:bg-gray-100 rounded-lg">
+            <Bookmark className="w-4 h-4 text-gray-400" />
+          </button>
+          <button className="p-2 hover:bg-gray-100 rounded-lg">
+            <Heart className="w-4 h-4 text-gray-400" />
+          </button>
+
+        </div>
+                
+      </div>
+            <span className="text-xs text-gray-500">
+
+            Đăng ngày: {job.postedDate}
+          </span>
+    </div>
   );
 
-  const handleSubFilterChange = (sub: string) => {
-    setSelectedSubFilter(sub);
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const handleFollow = (companyId: string) => {
-    setFollowedCompanies((prev) =>
-      prev.includes(companyId)
-        ? prev.filter((id) => id !== companyId)
-        : [...prev, companyId]
-    );
-  };
-  useEffect(() => {
-    const savedFollowed = localStorage.getItem("followedCompanies");
-    if (savedFollowed) {
-      setFollowedCompanies(JSON.parse(savedFollowed));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "followedCompanies",
-      JSON.stringify(followedCompanies)
-    );
-  }, [followedCompanies]);
+  const Pagination = () => (
+    <div className="flex items-center justify-center gap-2 mt-8">
+      <button className="p-2 hover:bg-gray-100 rounded">
+        <span className="text-gray-400">«</span>
+      </button>
+      <button className="p-2 hover:bg-gray-100 rounded">
+        <span className="text-gray-400">‹</span>
+      </button>
+      
+      {[1, 2, 3, 4, 5, 6].map((page) => (
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`w-10 h-10 rounded ${
+            currentPage === page
+              ? 'bg-orange-500 text-white'
+              : 'hover:bg-gray-100 text-gray-700'
+          }`}
+        >
+          {page}
+        </button>
+      ))}
+      
+      <button className="p-2 hover:bg-gray-100 rounded">
+        <span className="text-gray-400">›</span>
+      </button>
+      <button className="p-2 hover:bg-gray-100 rounded">
+        <span className="text-gray-400">»</span>
+      </button>
+    </div>
+  );
 
   return (
-    <section className="py-5 px-6">
-      <Box className="max-w-6xl mx-auto">
-        <h1 className="text-orange-400 font-semibold text-3xl mb-4">
-          Công ty tuyển dụng
-        </h1>
-        <Box className="rounded-3xl shadow-sm p-4 bg-white">
-          <Box className="mb-4">
-            <h2 className="font-semibold text-xl">Thương hiệu lớn tiêu biểu</h2>
-          </Box>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              CÔNG TY TUYỂN DỤNG
+            </h1>
+            <p className="text-lg text-red-500 mb-4">
+              Thương hiệu lớn tin tưởng sử dụng
+            </p>
+            <p className="text-gray-600 mb-2">
+              Khám phá cơ hội nghề nghiệp tại những thương hiệu uy tín nhất.
+            </p>
+            <p className="text-gray-600 mb-6">
+              Tìm kiếm môi trường làm việc lý tưởng với mức lương hấp dẫn và cơ hội phát triển không giới hạn.
+            </p>
 
-          <SubFilter
-            subFilters={INDUSTRIES}
-            selectedSubFilter={selectedSubFilter}
-            onSubFilterChange={handleSubFilterChange}
-          />
+            {/* Tabs */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    activeTab === tab
+                      ? tab === 'Tất cả'
+                        ? 'bg-red-500 text-white'
+                        : 'bg-orange-100 text-orange-700'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {paginatedCompanies.length > 0 ? (
-              paginatedCompanies.map((company) => (
-                <CompanyCard
-                  key={company.id}
-                  company={company}
-                  isFollowed={followedCompanies.includes(company.id)}
-                  onFollow={() => handleFollow(company.id)}
-                />
-              ))
-            ) : (
-              <Typography className="text-center text-gray-500 col-span-full">
-                Không có công ty nào trong ngành này.
-              </Typography>
-            )}
-          </Box>
-          {totalPages > 1 && (
-            <Box className="mt-6">
-              <PaginationItem
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </Box>
-          )}
-        </Box>
-      </Box>
-    </section>
+      {/* Job Grid */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {jobData.map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))}
+        </div>
+
+        {/* Pagination */}
+        <Pagination />
+      </div>
+    </div>
   );
 };
 
