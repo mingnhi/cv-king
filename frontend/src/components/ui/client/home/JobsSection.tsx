@@ -17,6 +17,7 @@ const FILTER_OPTIONS = [
     "Mức lương",
     "Kinh nghiệm",
     "Ngành nghề",
+    "Hình thức",
 ] as const;
 type FilterOption = (typeof FILTER_OPTIONS)[number];
 
@@ -39,6 +40,7 @@ const FILTER_DATA: Record<FilterOption, string[]> = {
     "Mức lương": ["< 10 triệu", "10 - 20 triệu", "20 - 30 triệu", "> 30 triệu"],
     "Kinh nghiệm": ["Chưa có", "1 - 2 năm", "3 - 5 năm", "5+ năm"],
     "Ngành nghề": ["Công nghệ", "Kinh doanh", "Marketing", "Tài chính"],
+    "Hình thức": ["Online", "offline"]
 };
 
 const JOBS = [
@@ -51,6 +53,7 @@ const JOBS = [
         location: "Hà Nội",
         experience: "1 - 2 năm",
         field: "Công nghệ",
+        form: "online"
     },
     {
         id: "2",
@@ -61,6 +64,7 @@ const JOBS = [
         location: "Hồ Chí Minh",
         experience: "3 - 5 năm",
         field: "Tài chính",
+        form: "offline"
     },
     {
         id: "3",
@@ -71,6 +75,7 @@ const JOBS = [
         location: "Đà Nẵng",
         experience: "1 - 2 năm",
         field: "Marketing",
+        form: "online"
     },
     {
         id: "4",
@@ -81,6 +86,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "5",
@@ -91,6 +97,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "6",
@@ -101,6 +108,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "7",
@@ -111,6 +119,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "8",
@@ -121,6 +130,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "9",
@@ -131,6 +141,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "10",
@@ -141,6 +152,7 @@ const JOBS = [
         location: "Quảng Ninh",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "11",
@@ -151,6 +163,7 @@ const JOBS = [
         location: "Hải Phòng",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "12",
@@ -161,6 +174,7 @@ const JOBS = [
         location: "Bắc Ninh",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "13",
@@ -171,6 +185,7 @@ const JOBS = [
         location: "Hà Nội",
         experience: "3 - 5 năm",
         field: "Công nghệ",
+        form: "online"
     },
     {
         id: "14",
@@ -181,6 +196,7 @@ const JOBS = [
         location: "TP. Hồ Chí Minh",
         experience: "1 - 3 năm",
         field: "Tài chính",
+        form: "offline"
     },
     {
         id: "15",
@@ -191,6 +207,7 @@ const JOBS = [
         location: "Đà Nẵng",
         experience: "2 - 4 năm",
         field: "Marketing",
+        form: "online"
     },
     {
         id: "16",
@@ -201,6 +218,7 @@ const JOBS = [
         location: "Hải Phòng",
         experience: "Chưa có",
         field: "Nhân sự",
+        form: "offline"
     },
     {
         id: "17",
@@ -211,6 +229,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "18",
@@ -221,6 +240,7 @@ const JOBS = [
         location: "Bình Dương",
         experience: "1 - 2 năm",
         field: "Thiết kế",
+        form: "online"
     },
     {
         id: "19",
@@ -231,6 +251,7 @@ const JOBS = [
         location: "Hà Nội",
         experience: "3 - 5 năm",
         field: "Công nghệ",
+        form: "online"
     },
     {
         id: "20",
@@ -241,6 +262,7 @@ const JOBS = [
         location: "TP. Hồ Chí Minh",
         experience: "5+ năm",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "21",
@@ -251,6 +273,7 @@ const JOBS = [
         location: "Đà Nẵng",
         experience: "Chưa có",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "22",
@@ -261,6 +284,7 @@ const JOBS = [
         location: "Hà Nội",
         experience: "2 - 4 năm",
         field: "Công nghệ",
+        form: "online"
     },
     {
         id: "23",
@@ -271,6 +295,7 @@ const JOBS = [
         location: "Bình Dương",
         experience: "1 - 3 năm",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "24",
@@ -281,6 +306,7 @@ const JOBS = [
         location: "TP. Hồ Chí Minh",
         experience: "2 - 4 năm",
         field: "Marketing",
+        form: "online"
     },
     {
         id: "25",
@@ -291,6 +317,7 @@ const JOBS = [
         location: "Hải Phòng",
         experience: "Chưa có",
         field: "Công nghệ",
+        form: "online"
     },
     {
         id: "26",
@@ -301,6 +328,7 @@ const JOBS = [
         location: "Cần Thơ",
         experience: "5+ năm",
         field: "Tài chính",
+        form: "offline"
     },
     {
         id: "27",
@@ -311,6 +339,7 @@ const JOBS = [
         location: "Quảng Ninh",
         experience: "1 - 2 năm",
         field: "Nhân sự",
+        form: "offline"
     },
     {
         id: "28",
@@ -321,6 +350,7 @@ const JOBS = [
         location: "Đà Nẵng",
         experience: "3 - 5 năm",
         field: "Thiết kế",
+        form: "online"
     },
     {
         id: "29",
@@ -331,6 +361,7 @@ const JOBS = [
         location: "Bắc Ninh",
         experience: "2 - 4 năm",
         field: "Kinh doanh",
+        form: "offline"
     },
     {
         id: "30",
@@ -341,7 +372,8 @@ const JOBS = [
         location: "TP. Hồ Chí Minh",
         experience: "3 - 5 năm",
         field: "Tài chính",
-    },
+        form: "online"
+    }
 ];
 const JobsSection: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -458,6 +490,8 @@ const JobsSection: React.FC = () => {
                         return job.experience === selectedSubFilter;
                     case "Ngành nghề":
                         return job.field === selectedSubFilter;
+                    case "Hình thức":
+                        return job.form === selectedSubFilter;
                     default:
                         return true;
                 }
@@ -638,7 +672,7 @@ const JobsSection: React.FC = () => {
                 <Box className={isMobile ? "w-full" : "w-[70%] inline-block"} sx={{ verticalAlign: "top" }}>
                     <Box className="mb-4">
                         <h1 className="text-black font-bold text-[64px]">
-                            Việc làm tot nhat
+                            Việc làm tốt nhất
                         </h1>
                     </Box>
                     {isMobile && (
@@ -664,14 +698,14 @@ const JobsSection: React.FC = () => {
 
 
                     <Box className="flex flex-col gap-6 mt-4 w-[1064px]">
-                        <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start ">                          
+                        <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start ">
                             {filteredJobs.length > 0 ? (
-                            filteredJobs.slice(0, visibleJobsLimit).map((job) => <JobCard key={job.id} job={job} />)
-                        ) : (
-                            <Typography className="text-center text-gray-500 col-span-full">
-                                Không có công việc nào để hiển thị.
-                            </Typography>
-                        )}
+                                filteredJobs.slice(0, visibleJobsLimit).map((job) => <JobCard key={job.id} job={job} />)
+                            ) : (
+                                <Typography className="text-center text-gray-500 col-span-full">
+                                    Không có công việc nào để hiển thị.
+                                </Typography>
+                            )}
                         </Box>
                         {visibleJobsLimit < JOBS.length && filteredJobs.length > visibleJobsLimit && (
                             <Box sx={{ display: "flex", justifyContent: "center", paddingY: 2 }}>
@@ -680,7 +714,7 @@ const JobsSection: React.FC = () => {
                                     color="primary"
                                     onClick={handleShowMore}
                                     sx={{
-backgroundColor: "#facc15", color: "black", "&:hover": { backgroundColor: "#f59e0b" }
+                                        backgroundColor: "#facc15", color: "black", "&:hover": { backgroundColor: "#f59e0b" }
                                     }}
                                 >
                                     Xem thêm
