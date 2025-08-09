@@ -4,6 +4,8 @@ import * as React from 'react';
 import { z } from "zod";
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+
+import avatar from "@/assets/images/lem.jpg";
 import {
   TextField,
   Select,
@@ -15,6 +17,7 @@ import {
   Button,
   Avatar,
   Typography,
+  Input,
 } from "@mui/material";
 import Image from "next/image";
 
@@ -172,12 +175,7 @@ const InforUser = ( PersonalInforProps ) => {
   
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    username: "Lương Hải Lâm",
-    phonenumber: "0987654321",
-    birthday: new Date("2001-12-07"),
-    sex: "Nam",
-    hometown: "Hà Nội",
-    nationality: "Việt Nam",
+
   });
 
   const handleEditToggle = () => {
@@ -210,31 +208,28 @@ const InforUser = ( PersonalInforProps ) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: "grid",
+        justifyContent: "flex",
+        alignItems: "start",
         minHeight: "100vh",
         maxWidth: 1520,
-        marginLeft: "320px",
+        margin: "auto",
         padding: 4,
+                backgroundColor : "white"
       }}
     >
-      <Box sx={{ maxWidth: 650, width: "100%" }}>
-        {/* Header with Avatar and Edit Button */}
+      <Box sx={{ maxWidth: 950, width: "100%" }}>
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            mb: 4,
+            mb: 4, 
+                        ml: 10,
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Avatar
-              src="/lem.jpg"
-              alt="User avatar"
-              sx={{ width: 80, height: 80 }}
-            />
+           <Image src={avatar} alt="Hình ảnh" width={80} height={80}/> 
             <Typography variant="h6" fontWeight="medium">
               Luong Hai Lam
             </Typography>
@@ -254,7 +249,7 @@ const InforUser = ( PersonalInforProps ) => {
         </Box>
 
         {/* Form */}
-        <Box component="form" onSubmit={form.handleSubmit(onsubmit)} sx={{ mt: 4 }}>
+        <Box component="form" onSubmit={form.handleSubmit(onsubmit)} sx={{ ml: 8,  }}>
           <Typography variant="h6" fontWeight="bold" sx={{ mb: 4 }}>
             Thông tin cá nhân
           </Typography>
@@ -262,22 +257,24 @@ const InforUser = ( PersonalInforProps ) => {
             {/* Column 1 */}
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}>
               {/* Username */}
-              <FormControl error={!!form.formState.errors.username}>
-                <InputLabel>Họ và tên</InputLabel>
-                <TextField
-                  {...form.register("username")}
-                  label="Họ và tên"
-                  disabled={!isEditing}
-                  inputProps={{ maxLength: 50 }}
-                  sx={{ maxWidth: 250 }}
-                  error={!!form.formState.errors.username}
-                  helperText={form.formState.errors.username?.message}
-                />
-              </FormControl>
+             <FormControl >
+        <TextField
+          {...form.register("username")}
+          label="Họ và tên"
+          disabled={!isEditing}
+          inputProps={{ maxLength: 50 }}
+          sx={{ maxWidth: 250 }}
+          error={!!form.formState.errors.username}
+          helperText={form.formState.errors.username?.message}
+          InputLabelProps={{ shrink: true }}
+        />
+      </FormControl>
+
+
 
               {/* Sex */}
-              <FormControl error={!!form.formState.errors.sex}>
-                <InputLabel>Giới tính</InputLabel>
+              <FormControl >
+                                <InputLabel>Giới Tính</InputLabel>
                 <Select
                   {...form.register("sex")}
                   label="Giới tính"
@@ -298,7 +295,6 @@ const InforUser = ( PersonalInforProps ) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}>
               {/* Phonenumber */}
               <FormControl error={!!form.formState.errors.phonenumber}>
-                <InputLabel>Số điện thoại</InputLabel>
                 <TextField
                   {...form.register("phonenumber")}
                   label="Số điện thoại"
@@ -307,12 +303,12 @@ const InforUser = ( PersonalInforProps ) => {
                   sx={{ maxWidth: 250 }}
                   error={!!form.formState.errors.phonenumber}
                   helperText={form.formState.errors.phonenumber?.message}
+          InputLabelProps={{ shrink: true }}
                 />
               </FormControl>
 
               {/* Hometown */}
               <FormControl error={!!form.formState.errors.hometown}>
-                <InputLabel>Quê quán</InputLabel>
                 <TextField
                   {...form.register("hometown")}
                   label="Quê quán"
@@ -320,6 +316,7 @@ const InforUser = ( PersonalInforProps ) => {
                   sx={{ maxWidth: 250 }}
                   error={!!form.formState.errors.hometown}
                   helperText={form.formState.errors.hometown?.message}
+          InputLabelProps={{ shrink: true }}
                 />
               </FormControl>
             </Box>
@@ -344,7 +341,6 @@ const InforUser = ( PersonalInforProps ) => {
 
               {/* Nationality */}
               <FormControl error={!!form.formState.errors.nationality}>
-                <InputLabel>Quốc tịch</InputLabel>
                 <TextField
                   {...form.register("nationality")}
                   label="Quốc tịch"
@@ -352,6 +348,7 @@ const InforUser = ( PersonalInforProps ) => {
                   sx={{ maxWidth: 250 }}
                   error={!!form.formState.errors.nationality}
                   helperText={form.formState.errors.nationality?.message}
+          InputLabelProps={{ shrink: true }}
                 />
               </FormControl>
             </Box>

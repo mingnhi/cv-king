@@ -62,7 +62,9 @@ const MenuTabs = () => {
   const tabList = [
     { label: 'Việc làm', content:<></> },
     { label: 'Quản lí CV & Cover letter', content: 'Nội dung cho tab Quản lí CV & Cover letter' },
-    { label: 'Hồ sơ cá nhân', content: <InforUser/> },
+    { label: 'Hồ sơ cá nhân', content: <InforUser  isEditing={isEditing}
+                data={formData}
+                onSave={handleSave}/> },
     { label: 'Đăng xuất', content: 'Nội dung cho tab Đăng Xuất' },
   ];
   return (
