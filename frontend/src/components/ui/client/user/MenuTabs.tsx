@@ -44,12 +44,6 @@ const MenuTabs = () => {
   };
      const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-        username: "Lương Hải Lâm",
-        phonenumber: "0987654321",
-        birthday: new Date("2001-12-07"),
-        sex: "Nam",
-        hometown: "Hà Nội",
-        nationality: "Việt Nam",
     });
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
