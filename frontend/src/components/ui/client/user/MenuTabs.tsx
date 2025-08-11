@@ -62,21 +62,21 @@ const MenuTabs = () => {
     { label: 'Đăng xuất', content: 'Nội dung cho tab Đăng Xuất' },
   ];
   return (
-    <Box sx={{ display: 'flex', height: '100vh', bgcolor: '#f5f5f5' }}>
+    <Box sx={{ display: 'flex', height: 'auto', bgcolor: '#f5f5f5' }}>
       <Tabs
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider', minWidth: '200px', bgcolor: 'white' }}
+        sx={{ borderRight: 1, borderColor: 'divider', minWidth: '200px', bgcolor: 'tan', height : '250px', marginLeft: '4rem', marginTop: '3rem' }}
       >
         {tabList.map((tab, index) => (
           <Tab
             key={index}
             label={tab.label}
             {...a11yProps(index)}
-            sx={{ bgcolor: value === index ? '#fff3e0' : 'transparent' }}
+            sx={{  bgcolor: value === index ? '#fff3e0' : 'transparent' }}
           />
         ))}
       </Tabs>

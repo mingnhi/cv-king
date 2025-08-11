@@ -1,294 +1,207 @@
 "use client";
-import React, { useState } from 'react';
-
-import { Heart, Bookmark, MapPin, DollarSign, Clock, Building } from 'lucide-react';
-
+import { CardContent, Card } from "@/lib/card";
+import { Button } from "@/lib/button";
+import { Badge } from "@/lib/badge";
+import { MapPin , Users , Star} from "lucide-react";
+import { ImageWithFallback } from "@/lib/ImageWithFallback";
+import { AppProvider, useApp } from "@/components/AppContext";
+import Image from "next/image";
+import company from "@/assets/images/employee.png";
 const CompaniesSection = () => {
-  const [activeTab, setActiveTab] = useState('Tất cả');
-  const [currentPage, setCurrentPage] = useState(1);
+    const {navigateTo} = useApp(); 
 
-  const tabs = [
-    'Tất cả',
-    'Ngân hàng',
-    'Bất Động sản',
-    'Xây dựng',
-    'IT - Phần mềm',
-    'logistics-vận tải'
-  ];
+ 
 
-  const jobData = [
-    {
-      id: 1,
-      company: 'Techcombank',
-      type: 'Ngân hàng • Công ty niêm yết',
-      rating: 4.4,
-      reviews: 1234,
-      urgent: true,
-      featured: false,
-      location: 'Hà Nội, TP.HCM, Đà Nẵng',
-      salary: '10 - 20 triệu',
-      experience: 'Toàn thời gian-Hybrid',
-      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
-      benefits: [
-        'Bảo hiểm xã hội theo cơ chế',
-        'Thưởng hiệu quả 2-6 tháng lương',
-        'Đào tạo & phát triển nghề nghiệp',
-        'Nghỉ phép 15 ngày/năm'
-      ],
-      postedDate: '31/07/2025 lúc 14 h30'
-    },
-    {
-      id: 2,
-      company: 'Techcombank',
-      type: 'Ngân hàng • Công ty niêm yết',
-      rating: 4.8,
-      reviews: 1234,
-      urgent: false,
-      featured: true,
-      location: 'Hà Nội, TP.HCM, Đà Nẵng',
-      salary: '12 - 20 triệu',
-      experience: 'Toàn thời gian-Hybrid',
-      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
-      benefits: [
-        'Bảo hiểm xã hội theo cơ chế',
-        'Thưởng hiệu quả 2-6 tháng lương',
-        'Đào tạo & phát triển nghề nghiệp',
-        'Nghỉ phép 15 ngày/năm'
-      ],
-      postedDate: '31/07/2025 lúc 14 h30'
-    },
-    {
-      id: 3,
-      company: 'Techcombank',
-      type: 'Ngân hàng • Công ty niêm yết',
-      rating: 4.8,
-      reviews: 1234,
-      urgent: true,
-      featured: false,
-      location: 'Hà Nội, TP.HCM, Đà Nẵng',
-      salary: '10 - 20 triệu',
-      experience: 'Toàn thời gian-Hybrid',
-      skills: ['Chuyên viên khách hàng', 'Business Analyst'],
-      benefits: [
-        'Bảo hiểm xã hội theo cơ chế',
-        'Thưởng hiệu quả 2-6 tháng lương',
-        'Đào tạo & phát triển nghề nghiệp',
-        'Nghỉ phép 15 ngày/năm'
-      ],
-      postedDate: '31/07/2025 lúc 14 h30'
-    },
-    {
-      id: 4,
-      company: 'Techcombank',
-      type: 'Ngân hàng • Công ty niêm yết',
-      rating: 4.0,
-      reviews: 1234,
-      urgent: false,
-      featured: true,
-      location: 'Hà Nội, TP.HCM, Đà Nẵng',
-      salary: '10 - 20 triệu',
-      experience: 'Toàn thời gian-Hybrid',
-      skills: ['Chuyên viên tín dụng', 'Chuyên viên CNTT'],
-      benefits: [
-        'Bảo hiểm xã hội theo cơ chế',
-        'Thưởng hiệu quả 2-6 tháng lương',
-        'Đào tạo & phát triển nghề nghiệp',
-        'Nghỉ phép 15 ngày/năm'
-      ],
-      postedDate: '31/07/2025 lúc 14 h30'
-    }
-  ];
+  const companies = [
+     {
+  id: 1,
+  name: 'TechCorp Innovation',
+  logo: company,
+  industry: 'Technology',
+  location: 'Ho Chi Minh City',
+  employees: '500-1000',
+  rating: 4.8,
+  openJobs: 15,
+  description: 'Công ty công nghệ hàng đầu chuyên về giải pháp AI và máy học.',
+  founded: '2015',
+  website: 'www.techcorp-innovation.com',
+  benefits: ['Bảo hiểm y tế', 'Giờ làm việc linh hoạt', 'Làm việc từ xa', 'Ngân sách học tập'],
+  culture: 'Văn hóa đổi mới, tập trung vào công nghệ tiên tiến và phát triển nghề nghiệp.'
+},
+{
+  id: 2,
+  name: 'StartupVN',
+  logo: company,
+  industry: 'Fintech',
+  location: 'Hanoi',
+  employees: '100-500',
+  rating: 4.6,
+  openJobs: 8,
+  description: 'Startup fintech mang tính cách mạng, thay đổi thanh toán số tại Việt Nam.',
+  founded: '2018',
+  website: 'www.startupvn.com',
+  benefits: ['Cổ phần', 'Bữa trưa miễn phí', 'Thẻ thành viên phòng gym', 'Sự kiện nhóm'],
+  culture: 'Môi trường startup năng động, cơ hội phát triển sự nghiệp nhanh chóng.'
+},
+{
+  id: 3,
+  name: 'DesignStudio Pro',
+  logo: company,
+  industry: 'Design & Creative',
+  location: 'Da Nang',
+  employees: '50-100',
+  rating: 4.9,
+  openJobs: 5,
+  description: 'Công ty thiết kế đạt nhiều giải thưởng, tạo ra trải nghiệm số xuất sắc.',
+  founded: '2012',
+  website: 'www.designstudio-pro.com',
+  benefits: ['Tự do sáng tạo', 'Công cụ thiết kế', 'Ngân sách hội thảo', 'Lịch làm việc linh hoạt'],
+  culture: 'Môi trường sáng tạo, hợp tác, đề cao sự xuất sắc trong thiết kế.'
+},
+{
+  id: 4,
+  name: 'CloudTech Solutions',
+  logo: company,
+  industry: 'Cloud Computing',
+  location: 'Remote',
+  employees: '200-500',
+  rating: 4.7,
+  openJobs: 12,
+  description: 'Chuyên gia hạ tầng đám mây giúp doanh nghiệp mở rộng toàn cầu.',
+  founded: '2016',
+  website: 'www.cloudtech-solutions.com',
+  benefits: ['100% làm từ xa', 'Cung cấp thiết bị', 'Đội ngũ toàn cầu', 'Mức lương cạnh tranh'],
+  culture: 'Văn hóa làm việc từ xa, đề cao cân bằng công việc-cuộc sống và hợp tác toàn cầu.'
+},
+{
+  id: 5,
+  name: 'GrowthCo Marketing',
+  logo: company,
+  industry: 'Marketing',
+  location: 'Ho Chi Minh City',
+  employees: '100-200',
+  rating: 4.5,
+  openJobs: 7,
+  description: 'Công ty marketing dựa trên dữ liệu, thúc đẩy tăng trưởng thương hiệu tại châu Á.',
+  founded: '2017',
+  website: 'www.growthco-marketing.com',
+  benefits: ['Thưởng hiệu suất', 'Công cụ marketing', 'Tiếp xúc khách hàng', 'Phát triển sự nghiệp'],
+  culture: 'Văn hóa định hướng kết quả, tập trung vào chiến lược marketing dựa trên dữ liệu.'
+},
+{
+  id: 6,
+  name: 'DataFlow Analytics',
+  logo: company,
+  industry: 'Data Science',
+  location: 'Can Tho',
+  employees: '50-100',
+  rating: 4.8,
+  openJobs: 9,
+  description: 'Nền tảng phân tích nâng cao hỗ trợ ra quyết định dựa trên dữ liệu.',
+  founded: '2019',
+  website: 'www.dataflow-analytics.com',
+  benefits: ['Công cụ khoa học dữ liệu', 'Thời gian nghiên cứu', 'Tham dự hội thảo', 'Dự án sáng tạo'],
+  culture: 'Môi trường nghiên cứu, khuyến khích đổi mới và học hỏi liên tục.'
+}];
 
-  const JobCard = ({ job }) => (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-            <Building className="w-6 h-6 text-orange-600" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-gray-900">{job.company}</h3>
-            <p className="text-sm text-gray-600">{job.type}</p>
-            <div className="flex items-center gap-1 mt-1">
-              <span className="text-yellow-400">★</span>
-              <span className="text-sm font-medium">{job.rating}</span>
-              <span className="text-sm text-gray-500">({job.reviews} reviews)</span>
-            </div>
-                         <div className="flex gap-2 mt-2">
-              {job.urgent && (
-                <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-medium">
-                  Gấp
-                </span>
-              )}
-              {job.featured && (
-                <span className="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs font-medium">
-                  Hot job
-                </span>
-              )}
-              <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
-                Tuyển gấp
-              </span>
-            </div>
-          </div>
-        </div>
+ const handleCompanyClick = (company: any) => {
+    navigateTo('company-detail', { company });
+  };
 
-      </div>
-
-      {/* Job Details */}
-      <div className="space-y-2 mb-4">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <MapPin className="w-4 h-4" />
-          <span>{job.location}</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <DollarSign className="w-4 h-4" />
-          <span>{job.salary}</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Clock className="w-4 h-4" />
-          <span>{job.experience}</span>
-        </div>
-      </div>
-
-      {/* Skills */}
-      <div className="mb-4">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Vị trí đang tuyển:</h4>
-        <div className="flex flex-wrap gap-2">
-          {job.skills.map((skill, index) => (
-            <span
-              key={index}
-              className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm border"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Benefits */}
-      <div className="mb-4">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Phúc lợi nổi bật:</h4>
-        <ul className="space-y-1">
-          {job.benefits.map((benefit, index) => (
-            <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-              <span className="text-green-500 mt-1">•</span>
-              <span>{benefit}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-        <button className="bg-[#F6E2CC] hover:bg-orange-600 text-[#CD6D00] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 w-[230px h-[30px],">
-          Xem việc làm
-          <span>→</span>
-        </button>
-        <div className="flex items-center gap-3">
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
-            <Bookmark className="w-4 h-4 text-gray-400" />
-          </button>
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
-            <Heart className="w-4 h-4 text-gray-400" />
-          </button>
-
-        </div>
-                
-      </div>
-            <span className="text-xs text-gray-500">
-
-            Đăng ngày: {job.postedDate}
-          </span>
-    </div>
-  );
-
-  const Pagination = () => (
-    <div className="flex items-center justify-center gap-2 mt-8">
-      <button className="p-2 hover:bg-gray-100 rounded">
-        <span className="text-gray-400">«</span>
-      </button>
-      <button className="p-2 hover:bg-gray-100 rounded">
-        <span className="text-gray-400">‹</span>
-      </button>
-      
-      {[1, 2, 3, 4, 5, 6].map((page) => (
-        <button
-          key={page}
-          onClick={() => setCurrentPage(page)}
-          className={`w-10 h-10 rounded ${
-            currentPage === page
-              ? 'bg-orange-500 text-white'
-              : 'hover:bg-gray-100 text-gray-700'
-          }`}
-        >
-          {page}
-        </button>
-      ))}
-      
-      <button className="p-2 hover:bg-gray-100 rounded">
-        <span className="text-gray-400">›</span>
-      </button>
-      <button className="p-2 hover:bg-gray-100 rounded">
-        <span className="text-gray-400">»</span>
-      </button>
-    </div>
-  );
+  const handleViewJobs = (e: React.MouseEvent, company: any) => {
+    e.stopPropagation();
+    navigateTo('jobs', { 
+      search: company.name,
+      filters: { company: company.name }
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              CÔNG TY TUYỂN DỤNG
-            </h1>
-            <p className="text-lg text-red-500 mb-4">
-              Thương hiệu lớn tin tưởng sử dụng
-            </p>
-            <p className="text-gray-600 mb-2">
-              Khám phá cơ hội nghề nghiệp tại những thương hiệu uy tín nhất.
-            </p>
-            <p className="text-gray-600 mb-6">
-              Tìm kiếm môi trường làm việc lý tưởng với mức lương hấp dẫn và cơ hội phát triển không giới hạn.
-            </p>
-
-            {/* Tabs */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeTab === tab
-                      ? tab === 'Tất cả'
-                        ? 'bg-red-500 text-white'
-                        : 'bg-orange-100 text-orange-700'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-          </div>
+   <section className="py-16 bg-gray-50">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl mb-4 text-gray-900">Top Companies</h2>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+            Join innovative companies that are shaping the future of work
+          </p>
         </div>
-      </div>
 
-      {/* Job Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {jobData.map((job) => (
-            <JobCard key={job.id} job={job} />
+        
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 ml-4 mr-4  ">
+          {companies.map((company) => (
+            <Card 
+              key={company.id} 
+              className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md cursor-pointer"
+              onClick={() => handleCompanyClick(company)}
+            >
+              <CardContent className="p-6">
+                <div className="text-center mb-4">
+                  <Image
+                                        width={30}
+                                        height={30}
+                    src={company.logo}
+                    alt={company.name}
+                    className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+                  />
+                  <h3 className="font-medium text-gray-900 mb-1 group-hover:text-orange-600 transition-colors">
+                    {company.name}
+                  </h3>
+                  <Badge variant="secondary" className="bg-orange-100 text-orange-700 text-xs">
+                    {company.industry}
+                  </Badge>
+                </div>
+
+                <div className="space-y-2 mb-4 text-sm text-gray-500">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      {company.location}
+                    </div>
+                    <div className="flex items-center">
+                      <Star className="h-4 w-4 mr-1 text-yellow-400" />
+                      {company.rating}
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="h-4 w-4 mr-2" />
+                    {company.employees} employees
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  {company.description}
+                </p>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-orange-600">
+                    {company.openJobs} open positions
+                  </span>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="border-orange-600 text-orange-600 hover:bg-orange-50"
+                    onClick={(e) => handleViewJobs(e, company)}
+                  >
+                    View Jobs
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
-        {/* Pagination */}
-        <Pagination />
+        <div className="text-center">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-orange-600 text-orange-600 hover:bg-orange-50"
+            onClick={() => navigateTo('companies')}
+          >
+            Explore All Companies
+          </Button>
+        </div>
       </div>
-    </div>
-  );
-};
+    </section>
+  );};
 
 export default CompaniesSection;

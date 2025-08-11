@@ -2,7 +2,6 @@ import React from "react";
 import SearchSection from "@/components/ui/client/home/SearchSection";
 import JobsSection from "@/components/ui/client/home/JobsSection";
 import CompaniesSection from "@/components/ui/client/home/CompaniesSection";
-import TodayJobsStatSection from "@/components/ui/client/home/TodayJobsStatSection";
 
 
 const HomePage = () => {
@@ -12,7 +11,6 @@ const HomePage = () => {
       <SearchSection />
       <JobsSection />
       <CompaniesSection />
-      <TodayJobsStatSection />
 
 </div>
     </>
