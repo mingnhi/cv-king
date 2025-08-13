@@ -1,6 +1,5 @@
 import React from "react";
 import NextLink from "next/link";
-import { useBreadcrumb } from "@/context/BreadcumbContext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
@@ -18,7 +17,6 @@ type Props = {
 
 
 const BreadcrumbTabActive: React.FC<Props> = ({items}) => {
-  const { currentPath } = useBreadcrumb();
 
   return (
     <Breadcrumbs

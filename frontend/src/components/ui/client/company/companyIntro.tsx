@@ -1,16 +1,26 @@
 import React from "react";
 import { Building2 } from "lucide-react";
-import { getCompanyIntroText, getCompanyIntroByIndex } from "@/faker/companyintro-data";
+import { getCompanyIntroText, getCompanyIntroByIndex, parseHtml } from "@/faker/companyintro-data";
 
 interface CompanyIntroProps {
     companyIndex?: number;
 }
 
+export interface CompanyIntroData {
+    id: string;
+    companyName: string;
+    intro: string;
+    highlights?: string[];
+    foundedYear?: number;
+    employeeCount?: string;
+    headquarters?: string;
+    industry?: string;
+    website?: string;
+}
+
 const CompanyIntro: React.FC<CompanyIntroProps> = ({ companyIndex = 0 }) => {
-    // Lấy dữ liệu intro từ faker
     const intro = getCompanyIntroText(companyIndex);
     const companyData = getCompanyIntroByIndex(companyIndex);
-    const paragraphs = intro.split(/\n\s*\n/);
 
     return (
         <div className="border border-blue-300 rounded-xl p-4">
@@ -53,16 +63,11 @@ const CompanyIntro: React.FC<CompanyIntroProps> = ({ companyIndex = 0 }) => {
             )}
 
             {/* Nội dung giới thiệu */}
-            <div className="flex flex-col gap-4">
-                {paragraphs.map((text, index) => (
-                    <div
-                        key={index}
-                        className={`rounded-xl shadow p-4 text-sm text-gray-800 bg-[#fdf8f5] ${index === 1 ? 'border-l-4 border-red-600 pl-3' : ''
-                            }`}
-                    >
-                        {text}
-                    </div>
-                ))}
+            <div className="rounded-xl shadow p-4 text-sm text-gray-800 bg-[#fdf8f5]">
+                <div
+                    dangerouslySetInnerHTML={parseHtml(intro)}
+                    className="prose prose-sm max-w-none"
+                />
             </div>
 
             {/* Highlights */}
