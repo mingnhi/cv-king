@@ -1,12 +1,16 @@
 "use client";
+
+import { ArrowRight } from "lucide-react";
+
 import React, { useState, useRef } from "react";
-import { Box, Button, ClickAwayListener, Portal, Paper } from "@mui/material";
+import { Box, ClickAwayListener, Portal, Paper } from "@mui/material";
+import { Button } from "@/components/ui/button"
 import {
-  BriefcaseBusiness,
-  ChartNoAxesCombined,
-  ChevronsRight,
-  List,
-  Search,
+    BriefcaseBusiness,
+    ChartNoAxesCombined,
+    ChevronsRight,
+    List,
+    Search,
 } from "lucide-react";
 import HeroSlider from "@/components/ui/common/HeroSlider";
 
@@ -14,227 +18,113 @@ import ImageBanner1 from "@/assets/images/banner5.png";
 import ImageBanner2 from "@/assets/images/banner6.png";
 import ImageBanner3 from "@/assets/images/banner7.png";
 import image from "@/assets/images/banner11.png";
-
-const sliderImages = [
-  {
-    src: ImageBanner1,
-    alt: "Banner 1",
-    onClick: () => window.open("https://cvking.vn", "_blank"),
-  },
-  {
-    src: ImageBanner2,
-    alt: "Banner 2",
-    onClick: () => window.open("https://cvking.vn", "_blank"),
-  },
-  {
-    src: ImageBanner3,
-    alt: "Banner 3",
-    onClick: () => window.open("https://cvking.vn", "_blank"),
-  },
-];
-
-const TodayJobStats = {
-  totalJobs: "234345",
-  newJobsToday: "1234",
-};
-
+import Link from "next/link";
 
 const SearchSection: React.FC = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const anchorRef = useRef<HTMLButtonElement | null>(null);
+    const [statsData, setStatsData] = useState([
+        {
+            id: 1,
+            number: "60K+",
+            description: "Ứng viên đã tìm việc",
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            )
+        },
+        {
+            id: 2,
+            number: "1,200",
+            description: "Việc làm mỗi nhật",
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            )
+        },
+        {
+            id: 3,
+            number: "95%",
+            description: "Tỷ lệ thành công",
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            )
+        },
+        {
+            id: 4,
+            number: "60K+",
+            description: "Ứng viên đã tìm việc",
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            )
+        },
+        {
+            id: 5,
+            number: "1,200",
+            description: "Việc làm mỗi nhật",
+            icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            )
+        },
 
-  const handleClick = () => {
-    setOpen((prev) => !prev);
-  };
+    ]);
+    const StatsCard = ({ card }) => {
+        return (
+            <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border border-gray-100 w-[200px] h-[200px] ml-[15px] mr-[15px]">
+                <div className="flex flex-col items-center text-center h-full justify-center">
+                    {/* Icon */}
+                    <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            {card.icon}
+                        </svg>
+                    </div>
+                    {/* Number */}
+                    <div className="text-3xl font-bold text-gray-800 mb-2">{card.number}</div>
+                    {/* Description */}
+                    <div className="text-sm text-gray-600 leading-relaxed">{card.description}</div>
+                </div>
+            </div>
+        );
+    };
 
-  const handleClickAway = () => {
-    setOpen(false);
-  };
+    return (
+        <div
+            className="w-full mx-auto py-5 px-6 h-[708px] bg-[#FBE4B2]"
 
-  const date = new Date().toLocaleDateString("vi-VN");
-
-  return (
-    <section
-      className="w-full mx-auto py-5 px-6"
-      style={{
-        background:
-          // "linear-gradient(to bottom, #f97316 0%, #fef3c7 40%, #f3f4f6 100%)",
-          "linear-gradient(#E36414, #800200)",
-      }}
-    >
-      <Box className="text-center mb-4">
-        <h1 className="text-white font-semibold text-3xl">
-          Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
-        </h1>
-        <p className="text-white mt-2">
-          Tiếp cận 60,000+ tin tuyển dụng việc làm mỗi ngày từ hàng nghìn doanh
-          nghiệp uy tín tại Việt Nam
-        </p>
-      </Box>
-
-      <Box className="flex flex-col md:flex-row gap-3 max-w-6xl shadow-2xl bg-white mx-auto rounded-xl mb-5 py-2 px-2 relative">
-        <ClickAwayListener onClickAway={handleClickAway}>
-          <Box className="relative w-full md:w-auto">
-            <Button
-              variant="outlined"
-              startIcon={<List />}
-              onClick={handleClick}
-              ref={anchorRef}
-              sx={{
-                width: { xs: "100%", md: "auto" },
-                color: "rgba(0, 0, 0, 0.6)",
-                borderRadius: "10rem",
-                borderColor: "rgba(128, 128, 128, 0.6)",
-                fontSize: "13px",
-                fontWeight: "bold",
-                paddingX: "16px",
-                paddingY: "10px",
-                justifyContent: "center",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                  borderColor: "orange",
-                  color: "orange",
-                },
-              }}
-            >
-              Danh mục nghề
-            </Button>
-
-            {open && (
-              <Portal>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: anchorRef.current?.getBoundingClientRect().bottom ?? 0,
-                    left: anchorRef.current?.getBoundingClientRect().left ?? 0,
-                    zIndex: 1300,
-                  }}
-                >
-                  <Paper
-                    sx={{
-                      marginTop: 3,
-                      padding: 2,
-                      borderRadius: 2,
-                      boxShadow: 3,
-                      minWidth: 200,
-                      maxHeight: 300,
-                      overflowY: "auto",
-                    }}
-                  >
-                    <ul className="space-y-1">
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        IT - Phần mềm
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Kinh doanh
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Marketing
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Thiết kế đồ họa
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Hành chính - Nhân sự
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Giáo dục - Đào tạo
-                      </li>
-                      <li className="hover:text-orange-500 cursor-pointer">
-                        Tài chính - Kế toán
-                      </li>
-                    </ul>
-                  </Paper>
-                </Box>
-              </Portal>
-            )}
-          </Box>
-        </ClickAwayListener>
-
-        <input
-          type="text"
-          placeholder="Vị trí tuyển dụng, tên công ty,..."
-          className="w-full md:flex-1 px-4 py-2 rounded-md border border-gray-300  focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
-
-        <Button
-          variant="outlined"
-          startIcon={<Search />}
-          sx={{
-            width: { xs: "100%", md: "auto" },
-            marginLeft: { xs: 0, md: "15px" },
-            marginTop: { xs: "4px", md: 0 },
-            color: "white",
-            borderRadius: "10rem",
-            borderColor: "orange",
-            fontSize: "13px",
-            fontWeight: "bold",
-            textTransform: "none",
-            backgroundColor: "orange",
-            paddingX: "16px",
-            paddingY: "10px",
-            justifyContent: "center",
-            "&:hover": {
-              backgroundColor: "rgba(255,140,0,1)",
-            },
-          }}
         >
-          Tìm kiếm
-        </Button>
-      </Box>
-      <Box className="grid grid-cols-1 lg:grid-cols-3 gap-y-6 md:gap-6 mt-6 max-w-6xl mx-auto items-center justify-center">
-        <Box className="col-span-1 h-full">
-          <Box
-            className="group w-full rounded-3xl shadow-md p-6 flex flex-col gap-3 h-full relative transition-all duration-300 overflow-hidden"
-            sx={{
-              height: "100%",
-              width: "100%",
-              backgroundImage: `url(${image.src})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              borderRadius: "24px",
-            }}
-          >
-            <Box className="flex items-center justify-between">
-              <Box className="flex items-center">
-                <BriefcaseBusiness className="text-orange-500 mr-2" />
-                <p className="text-xl font-bold">Thị trường việc làm</p>
-              </Box>
-              <p className="text-orange-500 font-semibold text-xl">{date}</p>
-            </Box>
+            <div className="ml-[389px] mt-[64px] w-[754px] h-[54px] rounded-[50px] bg-[#FFD09B] flex items-center justify-center">
 
-            <Box>
-              <Box className="flex items-center">
-                <p className="font-semibold text-lg mr-2">Việc tuyển dụng</p>
-                <p className="text-xl text-orange-400 font-semibold mr-1">
-                  {TodayJobStats.totalJobs}
-                </p>
-              </Box>
-              <Box className="flex items-center">
-                <p className="font-semibold text-lg mr-2">
-                  Việc làm mới hôm nay
-                </p>
-                <p className="text-xl text-orange-400 font-semibold mr-1">
-                  {TodayJobStats.newJobsToday}
-                </p>
-                <Box className="items-center justify-center bg-orange-400/20 p-2 rounded-full">
-                  <ChartNoAxesCombined size={20} className="text-orange-400" />
-                </Box>
-              </Box>
-            </Box>
+                <p className="text-[20] font-bold">Tim viec lam nhanh , viec lam moi tren toan quoc </p>
+            </div>
+            <div className="mt-[21px] ml-[267px] w-[998px] h-[100px]">
+                <div className="text-center">
+                    <p className="text-[50px] font-bold text-gray-800" style={{ letterSpacing: "0.1px", lineHeight: "50px", }}>
+                        Tiếp cận{' '}
+                        <span className="text-[50px] font-bold" style={{
+                            background: 'linear-gradient(90deg, #CD6D00 0%, #CD6D00 85%, #FF0000 91%, #FF0000 100%)',
+                            WebkitBackgroundClip: 'text',
+                            color: 'transparent'
+                        }}>60,000+</span>{' '}
+                        cơ hội việc làm từ hàng nghìn doanh nghiệp tại Việt Nam
+                    </p>
+                </div>
 
-            <Box  className="flex items-center justify-center absolute w-32 h-9 bg-orange-400 bottom-15 sm:bottom-5 right-0 rounded-l-2xl text-white opacity-0 group-hover:opacity-100 translate-x-full group-hover:translate-x-0 transition-all duration-300 cursor-pointer">
-              <p className="mr-1">Xem thêm</p>
-              <ChevronsRight />
-            </Box>
-          </Box>
-        </Box>
-        <Box className="col-span-2 h-full">
-          <HeroSlider images={sliderImages} height="200px" />
-        </Box>
-      </Box>
-    </section>
-  );
+            </div>
+            <div className="w-[1010px] h-[29px] mt-[25px] ml-[255px] flex items-center justify-center text-[24px]">
+
+                <p>Tim viec lam nhanh , viec lam moi nhat tu hang nghin doanh nghiep uy tin tai Viet Nam</p>
+            </div>
+            <div className="w-full h-[71px] mt-[25px] ml-[403px]  inline-flex items-center gap-1" >
+                <Button className="w-[402px] h-[71px] bg-[#DA5D1A] flex items-center justify-center rounded-[50px]" variant={"link"}><Link className="inline-flex items-center gap-1 text-[24px] font-bold text-[#FFFFFF]" href={"/login"}>Kham Pha ngay tai CVKING <ArrowRight className="w-4 h-4" /> </Link></Button>
+                <Button variant={"outline"} className="w-[244px] h-full ml-[30px] rounded-[50px]"  ><Link href={"#"} className="font-bold text-[24px]">Tao CV mien phi</Link></Button>
+            </div>
+            <div className=" p-8 min-h-screen">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex flex-wrap justify-center mb-8">
+                        {statsData.map((card) => (
+                            <StatsCard key={card.id} card={card} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default SearchSection;

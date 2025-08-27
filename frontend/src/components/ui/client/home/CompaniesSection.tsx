@@ -1,254 +1,207 @@
 "use client";
+import { CardContent, Card } from "@/lib/card";
+import { Button } from "@/lib/button";
+import { Badge } from "@/lib/badge";
+import { MapPin , Users , Star} from "lucide-react";
+import { ImageWithFallback } from "@/lib/ImageWithFallback";
+import { AppProvider, useApp } from "@/components/AppContext";
+import Image from "next/image";
+import company from "@/assets/images/employee.png";
+const CompaniesSection = () => {
+    const {navigateTo} = useApp(); 
 
-import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import SubFilter from "@/components/ui/common/SubFilterItem";
-import CompanyCard from "@/components/ui/common/CompanyCard";
-import imageCompany from "@/assets/images/jobstat1.png";
-import PaginationItem from "../../common/PaginationItem";
-const INDUSTRIES = [
-  "Tất cả",
-  "Ngân hàng",
-  "Bất động sản",
-  "Xây dựng",
-  "IT - Phần mềm",
-  "Tài chính",
-  "Bán lẻ - Hàng tiêu dùng - FMCG",
-  "Sản xuất",
-  "Logistics - Vận tải",
-  "Viễn thông",
-  "Bảo hiểm",
-  "Nhà hàng / Khách sạn",
-  "IT - Phần cứng",
-  "Marketing / Truyền thông / Quảng cáo",
-  "Chứng khoán",
-  "Điện tử / Điện lạnh",
-  "Xuất nhập khẩu",
-  "Thương mại điện tử",
-  "Dược phẩm / Y tế / Công nghệ sinh học",
-  "Tư vấn",
-];
+ 
 
-const COMPANIES = [
-  {
-    id: "1",
-    name: "Techcombank",
-    industry: "Ngân hàng",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 88,
-    description:
-      "Ngân hàng hàng đầu tại Việt Nam với các dịch vụ tài chính hiện đại.",
-  },
-  {
-    id: "2",
-    name: "Vingroup",
-    industry: "Bất động sản",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 120,
-    description:
-      "Tập đoàn bất động sản và dịch vụ hàng đầu Việt Nam, phát triển các dự án Vinhomes và Vincom.",
-  },
-  {
-    id: "3",
-    name: "FPT Software",
-    industry: "IT - Phần mềm",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 250,
-    description:
-      "Công ty công nghệ thông tin lớn nhất Việt Nam, chuyên về phát triển phần mềm và chuyển đổi số.",
-  },
-  {
-    id: "4",
-    name: "Vinamilk",
-    industry: "Bán lẻ - Hàng tiêu dùng - FMCG",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 60,
-    description:
-      "Thương hiệu sữa và sản phẩm tiêu dùng hàng đầu, xuất khẩu sang hơn 50 quốc gia.",
-  },
-  {
-    id: "5",
-    name: "Tập đoàn Hoà Phát",
-    industry: "Sản xuất",
-    image: imageCompany,
-    location: "Hải Dương",
-    totalJobs: 90,
-    description:
-      "Nhà sản xuất thép và vật liệu xây dựng hàng đầu Việt Nam, tiên phong trong sản xuất xanh.",
-  },
-  {
-    id: "6",
-    name: "Viettel",
-    industry: "Viễn thông",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 150,
-    description:
-      "Tập đoàn viễn thông lớn nhất Việt Nam, cung cấp dịch vụ di động và giải pháp công nghệ.",
-  },
-  {
-    id: "7",
-    name: "Shopee Việt Nam",
-    industry: "Thương mại điện tử",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 200,
-    description:
-      "Nền tảng thương mại điện tử hàng đầu, cung cấp trải nghiệm mua sắm trực tuyến tiện lợi.",
-  },
-  {
-    id: "8",
-    name: "Tập đoàn Sun Group",
-    industry: "Nhà hàng / Khách sạn",
-    image: imageCompany,
-    location: "Đà Nẵng",
-    totalJobs: 75,
-    description:
-      "Tập đoàn phát triển du lịch và khách sạn cao cấp, sở hữu các khu nghỉ dưỡng như InterContinental Danang.",
-  },
-  {
-    id: "9",
-    name: "VPBank",
-    industry: "Tài chính",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 100,
-    description:
-      "Ngân hàng thương mại hàng đầu, cung cấp các giải pháp tài chính cá nhân và doanh nghiệp.",
-  },
-  {
-    id: "10",
-    name: "TMA Solutions",
-    industry: "IT - Phần mềm",
-    image: imageCompany,
-    location: "TP. Hồ Chí Minh",
-    totalJobs: 180,
-    description:
-      "Công ty gia công phần mềm quốc tế, chuyên cung cấp giải pháp công nghệ cho khách hàng toàn cầu.",
-  },
-  {
-    id: "11",
-    name: "Bamboo Airways",
-    industry: "Logistics - Vận tải",
-    image: imageCompany,
-    location: "Hà Nội",
-    totalJobs: 50,
-    description:
-      "Hãng hàng không tư nhân, cung cấp dịch vụ vận tải hàng không chất lượng cao.",
-  },
-];
-const CompaniesSection: React.FC = () => {
-  const [selectedSubFilter, setSelectedSubFilter] = useState<string>("Tất cả");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
-  // Thêm trạng thái để quản lý danh sách công ty được theo dõi
-  const [followedCompanies, setFollowedCompanies] = useState<string[]>([]);
+  const companies = [
+     {
+  id: 1,
+  name: 'TechCorp Innovation',
+  logo: company,
+  industry: 'Technology',
+  location: 'Ho Chi Minh City',
+  employees: '500-1000',
+  rating: 4.8,
+  openJobs: 15,
+  description: 'Công ty công nghệ hàng đầu chuyên về giải pháp AI và máy học.',
+  founded: '2015',
+  website: 'www.techcorp-innovation.com',
+  benefits: ['Bảo hiểm y tế', 'Giờ làm việc linh hoạt', 'Làm việc từ xa', 'Ngân sách học tập'],
+  culture: 'Văn hóa đổi mới, tập trung vào công nghệ tiên tiến và phát triển nghề nghiệp.'
+},
+{
+  id: 2,
+  name: 'StartupVN',
+  logo: company,
+  industry: 'Fintech',
+  location: 'Hanoi',
+  employees: '100-500',
+  rating: 4.6,
+  openJobs: 8,
+  description: 'Startup fintech mang tính cách mạng, thay đổi thanh toán số tại Việt Nam.',
+  founded: '2018',
+  website: 'www.startupvn.com',
+  benefits: ['Cổ phần', 'Bữa trưa miễn phí', 'Thẻ thành viên phòng gym', 'Sự kiện nhóm'],
+  culture: 'Môi trường startup năng động, cơ hội phát triển sự nghiệp nhanh chóng.'
+},
+{
+  id: 3,
+  name: 'DesignStudio Pro',
+  logo: company,
+  industry: 'Design & Creative',
+  location: 'Da Nang',
+  employees: '50-100',
+  rating: 4.9,
+  openJobs: 5,
+  description: 'Công ty thiết kế đạt nhiều giải thưởng, tạo ra trải nghiệm số xuất sắc.',
+  founded: '2012',
+  website: 'www.designstudio-pro.com',
+  benefits: ['Tự do sáng tạo', 'Công cụ thiết kế', 'Ngân sách hội thảo', 'Lịch làm việc linh hoạt'],
+  culture: 'Môi trường sáng tạo, hợp tác, đề cao sự xuất sắc trong thiết kế.'
+},
+{
+  id: 4,
+  name: 'CloudTech Solutions',
+  logo: company,
+  industry: 'Cloud Computing',
+  location: 'Remote',
+  employees: '200-500',
+  rating: 4.7,
+  openJobs: 12,
+  description: 'Chuyên gia hạ tầng đám mây giúp doanh nghiệp mở rộng toàn cầu.',
+  founded: '2016',
+  website: 'www.cloudtech-solutions.com',
+  benefits: ['100% làm từ xa', 'Cung cấp thiết bị', 'Đội ngũ toàn cầu', 'Mức lương cạnh tranh'],
+  culture: 'Văn hóa làm việc từ xa, đề cao cân bằng công việc-cuộc sống và hợp tác toàn cầu.'
+},
+{
+  id: 5,
+  name: 'GrowthCo Marketing',
+  logo: company,
+  industry: 'Marketing',
+  location: 'Ho Chi Minh City',
+  employees: '100-200',
+  rating: 4.5,
+  openJobs: 7,
+  description: 'Công ty marketing dựa trên dữ liệu, thúc đẩy tăng trưởng thương hiệu tại châu Á.',
+  founded: '2017',
+  website: 'www.growthco-marketing.com',
+  benefits: ['Thưởng hiệu suất', 'Công cụ marketing', 'Tiếp xúc khách hàng', 'Phát triển sự nghiệp'],
+  culture: 'Văn hóa định hướng kết quả, tập trung vào chiến lược marketing dựa trên dữ liệu.'
+},
+{
+  id: 6,
+  name: 'DataFlow Analytics',
+  logo: company,
+  industry: 'Data Science',
+  location: 'Can Tho',
+  employees: '50-100',
+  rating: 4.8,
+  openJobs: 9,
+  description: 'Nền tảng phân tích nâng cao hỗ trợ ra quyết định dựa trên dữ liệu.',
+  founded: '2019',
+  website: 'www.dataflow-analytics.com',
+  benefits: ['Công cụ khoa học dữ liệu', 'Thời gian nghiên cứu', 'Tham dự hội thảo', 'Dự án sáng tạo'],
+  culture: 'Môi trường nghiên cứu, khuyến khích đổi mới và học hỏi liên tục.'
+}];
 
-  useEffect(() => {
-    const updatePageSize = () => {
-      const width = window.innerWidth;
-      setPageSize(width < 640 ? 4 : 9);
-    };
-    updatePageSize();
-    window.addEventListener("resize", updatePageSize);
-    return () => window.removeEventListener("resize", updatePageSize);
-  }, []);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedSubFilter]);
-
-  const filteredCompanies =
-    selectedSubFilter === "Tất cả"
-      ? COMPANIES
-      : COMPANIES.filter((company) => company.industry === selectedSubFilter);
-
-  const totalPages = Math.ceil(filteredCompanies.length / pageSize);
-
-  const paginatedCompanies = filteredCompanies.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
-
-  const handleSubFilterChange = (sub: string) => {
-    setSelectedSubFilter(sub);
+ const handleCompanyClick = (company: any) => {
+    navigateTo('company-detail', { company });
   };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handleViewJobs = (e: React.MouseEvent, company: any) => {
+    e.stopPropagation();
+    navigateTo('jobs', { 
+      search: company.name,
+      filters: { company: company.name }
+    });
   };
-
-  const handleFollow = (companyId: string) => {
-    setFollowedCompanies((prev) =>
-      prev.includes(companyId)
-        ? prev.filter((id) => id !== companyId)
-        : [...prev, companyId]
-    );
-  };
-  useEffect(() => {
-    const savedFollowed = localStorage.getItem("followedCompanies");
-    if (savedFollowed) {
-      setFollowedCompanies(JSON.parse(savedFollowed));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "followedCompanies",
-      JSON.stringify(followedCompanies)
-    );
-  }, [followedCompanies]);
 
   return (
-    <section className="py-5 px-6">
-      <Box className="max-w-6xl mx-auto">
-        <h1 className="text-orange-400 font-semibold text-3xl mb-4">
-          Công ty tuyển dụng
-        </h1>
-        <Box className="rounded-3xl shadow-sm p-4 bg-white">
-          <Box className="mb-4">
-            <h2 className="font-semibold text-xl">Thương hiệu lớn tiêu biểu</h2>
-          </Box>
+   <section className="py-16 bg-gray-50">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl mb-4 text-gray-900">Top Companies</h2>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+            Join innovative companies that are shaping the future of work
+          </p>
+        </div>
 
-          <SubFilter
-            subFilters={INDUSTRIES}
-            selectedSubFilter={selectedSubFilter}
-            onSubFilterChange={handleSubFilterChange}
-          />
+        
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 ml-4 mr-4  ">
+          {companies.map((company) => (
+            <Card 
+              key={company.id} 
+              className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md cursor-pointer"
+              onClick={() => handleCompanyClick(company)}
+            >
+              <CardContent className="p-6">
+                <div className="text-center mb-4">
+                  <Image
+                                        width={30}
+                                        height={30}
+                    src={company.logo}
+                    alt={company.name}
+                    className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+                  />
+                  <h3 className="font-medium text-gray-900 mb-1 group-hover:text-orange-600 transition-colors">
+                    {company.name}
+                  </h3>
+                  <Badge variant="secondary" className="bg-orange-100 text-orange-700 text-xs">
+                    {company.industry}
+                  </Badge>
+                </div>
 
-          <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {paginatedCompanies.length > 0 ? (
-              paginatedCompanies.map((company) => (
-                <CompanyCard
-                  key={company.id}
-                  company={company}
-                  isFollowed={followedCompanies.includes(company.id)}
-                  onFollow={() => handleFollow(company.id)}
-                />
-              ))
-            ) : (
-              <Typography className="text-center text-gray-500 col-span-full">
-                Không có công ty nào trong ngành này.
-              </Typography>
-            )}
-          </Box>
-          {totalPages > 1 && (
-            <Box className="mt-6">
-              <PaginationItem
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </Box>
-          )}
-        </Box>
-      </Box>
+                <div className="space-y-2 mb-4 text-sm text-gray-500">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      {company.location}
+                    </div>
+                    <div className="flex items-center">
+                      <Star className="h-4 w-4 mr-1 text-yellow-400" />
+                      {company.rating}
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="h-4 w-4 mr-2" />
+                    {company.employees} employees
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  {company.description}
+                </p>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-orange-600">
+                    {company.openJobs} open positions
+                  </span>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="border-orange-600 text-orange-600 hover:bg-orange-50"
+                    onClick={(e) => handleViewJobs(e, company)}
+                  >
+                    View Jobs
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-orange-600 text-orange-600 hover:bg-orange-50"
+            onClick={() => navigateTo('companies')}
+          >
+            Explore All Companies
+          </Button>
+        </div>
+      </div>
     </section>
-  );
-};
+  );};
 
 export default CompaniesSection;
