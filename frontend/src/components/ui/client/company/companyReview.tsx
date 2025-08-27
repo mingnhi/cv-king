@@ -5,8 +5,10 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+import { getCompanyReviewByIndex } from "@/faker/companyreview-data";
 
 type CompanyReviewProps = {
+    index?: number;
     title?: string;
     content?: string;
     role?: string;
@@ -16,33 +18,39 @@ type CompanyReviewProps = {
 };
 
 export default function CompanyReview({
-    title = 'Great place to work!',
-    content = 'Amazing company culture and great benefits. The team is very supportive and the work is challenging and rewarding.',
-    role = 'Software Engineer',
-    date = 'Dec 10, 2024',
-    rating = 5,
-    helpfulCount = 12,
+    index = 0,
+    title,
+    content,
+    role,
+    date,
+    rating,
+    helpfulCount,
 }: CompanyReviewProps): React.ReactElement {
+    const fallback = getCompanyReviewByIndex(index);
+    const finalTitle = title ?? fallback.title;
+    const finalContent = content ?? fallback.content;
+    const finalRole = role ?? fallback.role;
+    const finalDate = date ?? fallback.date;
+    const finalRating = rating ?? fallback.rating;
+    const finalHelpfulCount = helpfulCount ?? fallback.helpfulCount;
     return (
         <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2.5 }}>
             <Stack spacing={1.5}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
-                    <Rating name="read-only" value={rating} precision={0.5} readOnly size="small" />
-                    <Typography variant="body2" color="text.secondary">{date}</Typography>
+                    <Rating name="read-only" value={finalRating} precision={0.5} readOnly size="small" />
+                    <Typography variant="body2" color="text.secondary">{finalDate}</Typography>
                 </Stack>
 
                 <Typography variant="subtitle1" fontWeight={700} color="text.primary">
-                    {title}
+                    {finalTitle}
                 </Typography>
 
-                <Typography variant="body1" color="text.primary">
-                    {content}
-                </Typography>
+                <Typography variant="body1" color="text.primary" component="div" dangerouslySetInnerHTML={{ __html: finalContent }} />
 
-                <Typography variant="body2" color="text.secondary">{role}</Typography>
+                <Typography variant="body2" color="text.secondary">{finalRole}</Typography>
 
                 <Box display="flex" justifyContent="flex-end">
-                    <Typography variant="body2" color="text.secondary">{helpfulCount} people found this helpful</Typography>
+                    <Typography variant="body2" color="text.secondary">{finalHelpfulCount} people found this helpful</Typography>
                 </Box>
             </Stack>
         </Paper>

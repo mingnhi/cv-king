@@ -19,7 +19,7 @@ export default function CompanyTabs() {
     };
 
     return (
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <Box sx={{ width: '80%', typography: 'body1', margin: '0 auto' }}>
             <TabContext value={value}>
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ bgcolor: 'grey.100', borderRadius: '9999px', p: 0.5 }}>

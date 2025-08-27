@@ -34,11 +34,18 @@ export const companyContactData: CompanyContactData[] = [
             }
         ],
         tags: ["Công nghệ", "Phần mềm", "Digital Transformation", "AI/ML", "Cloud Computing"],
-        intro: `FPT Corporation là tập đoàn công nghệ hàng đầu Việt Nam, được thành lập năm 1988 với sứ mệnh đưa công nghệ đến mọi người, mọi nhà, mọi tổ chức.
-
-Với hơn 30 năm phát triển, FPT đã trở thành một trong những công ty công nghệ lớn nhất Việt Nam, hoạt động trong 3 lĩnh vực chính: Công nghệ (Technology), Viễn thông (Telecommunications) và Giáo dục (Education).
-
-FPT tự hào là đối tác tin cậy của nhiều tập đoàn công nghệ hàng đầu thế giới như Microsoft, SAP, Oracle, IBM... và đã thực hiện thành công hàng nghìn dự án cho khách hàng tại hơn 40 quốc gia trên toàn cầu.`
+        intro: `
+<h2 class="text-2xl font-bold mt-2 mb-3 scroll-mt-20">Về FPT Corporation</h2>
+<p>
+  FPT là tập đoàn công nghệ hàng đầu Việt Nam, thành lập năm 1988 với sứ mệnh đưa công nghệ đến mọi người, mọi nhà, mọi tổ chức.
+  Hoạt động trong 3 lĩnh vực: <strong>Công nghệ</strong>, <strong>Viễn thông</strong>, <strong>Giáo dục</strong>.
+</p>
+<ul>
+  <li>Đối tác: Microsoft, SAP, Oracle, IBM</li>
+  <li>Hiện diện 40+ quốc gia</li>
+  <li>30.000+ nhân sự</li>
+</ul>
+`
     },
     {
         address: "Lô E2-M3, Đường D1, Khu Công nghệ cao, Quận 9, TP.HCM",
@@ -60,11 +67,21 @@ FPT tự hào là đối tác tin cậy của nhiều tập đoàn công nghệ 
             }
         ],
         tags: ["Game", "Fintech", "E-commerce", "Digital Payment", "Entertainment"],
-        intro: `VNG Corporation là công ty công nghệ hàng đầu Việt Nam, được thành lập năm 2004 với tên gọi ban đầu là VinaGame. VNG đã phát triển từ một công ty game nhỏ thành một tập đoàn công nghệ đa ngành.
-
-VNG hiện là công ty công nghệ có giá trị vốn hóa lớn nhất Việt Nam, hoạt động trong nhiều lĩnh vực: Game (ZingPlay, VNG Cloud), Fintech (ZaloPay), E-commerce (Tiki), Digital Entertainment (Zing MP3, Zing TV), và nhiều sản phẩm công nghệ khác.
-
-Với đội ngũ hơn 4,000 nhân viên tài năng và sáng tạo, VNG không ngừng đổi mới và phát triển các sản phẩm công nghệ tiên tiến, mang lại trải nghiệm tuyệt vời cho hàng triệu người dùng Việt Nam.`
+        intro: `
+<h2 class="text-2xl font-bold mt-2 mb-3 scroll-mt-20">Về VNG Corporation</h2>
+<p>
+  Thành lập 2004 (tiền thân VinaGame), phát triển từ công ty game thành tập đoàn công nghệ đa ngành.
+</p>
+<h3 class="text-xl font-semibold mt-6 mb-2">Lĩnh vực</h3>
+<ul>
+  <li>Game: ZingPlay, VNG Cloud</li>
+  <li>Fintech: ZaloPay</li>
+  <li>E-commerce: Tiki</li>
+  <li>Digital Entertainment: Zing MP3, Zing TV</li>
+  
+</ul>
+<p>Hơn 4.000 nhân sự, liên tục đổi mới cho hàng triệu người dùng.</p>
+`
     },
     {
         address: "Tầng 4, Tòa nhà Viettel, 285 Cách Mạng Tháng 8, Quận 10, TP.HCM",
@@ -86,11 +103,22 @@ Với đội ngũ hơn 4,000 nhân viên tài năng và sáng tạo, VNG không 
             }
         ],
         tags: ["E-commerce", "Retail", "Logistics", "Customer Service", "Digital Marketing"],
-        intro: `Tiki Corporation là một trong những nền tảng thương mại điện tử hàng đầu Việt Nam, được thành lập năm 2010 bởi anh Trần Ngọc Thái Sơn. Tiki tự hào là "Amazon của Việt Nam" với mô hình kinh doanh B2C (Business to Consumer).
-
-Tiki nổi tiếng với cam kết "100% hàng chính hãng" và dịch vụ giao hàng nhanh chóng, đáng tin cậy. Với khoảng 10 triệu sản phẩm đa dạng từ sách, điện tử, thời trang đến đồ gia dụng, Tiki đã trở thành điểm đến tin cậy của hàng triệu người tiêu dùng Việt Nam.
-
-Tiki không chỉ là nền tảng mua sắm trực tuyến mà còn là hệ sinh thái công nghệ toàn diện, bao gồm TikiNOW (giao hàng 2 giờ), TikiPay (ví điện tử), và nhiều dịch vụ tiện ích khác.`
+        intro: `
+<h2 class="text-2xl font-bold mt-2 mb-3 scroll-mt-20">Về Tiki Corporation</h2>
+<p>
+  Nền tảng TMĐT hàng đầu Việt Nam (2010), mô hình <strong>B2C</strong>.
+</p>
+<ul>
+  <li>Cam kết 100% hàng chính hãng</li>
+  <li>10 triệu+ sản phẩm</li>
+  <li>Giao nhanh, đáng tin cậy</li>
+</ul>
+<h3 class="text-xl font-semibold mt-6 mb-2">Hệ sinh thái</h3>
+<ul>
+  <li>TikiNOW (giao hàng 2 giờ)</li>
+  <li>TikiPay (ví điện tử)</li>
+</ul>
+`
     },
     {
         address: "Tầng 5, Tòa nhà Saigon Trade Center, 37 Tôn Đức Thắng, Quận 1, TP.HCM",
@@ -112,11 +140,19 @@ Tiki không chỉ là nền tảng mua sắm trực tuyến mà còn là hệ si
             }
         ],
         tags: ["E-commerce", "Marketplace", "Mobile App", "Digital Payment", "Logistics"],
-        intro: `Shopee Vietnam là một phần của Sea Group - tập đoàn công nghệ hàng đầu Đông Nam Á. Shopee được thành lập năm 2015 và nhanh chóng trở thành nền tảng thương mại điện tử hàng đầu tại Việt Nam và khu vực.
-
-Shopee nổi tiếng với mô hình C2C (Consumer to Consumer) và B2C (Business to Consumer), tạo ra một hệ sinh thái mua bán trực tuyến sôi động. Với hơn 2 triệu người bán và hàng chục triệu người mua, Shopee đã tạo ra một cộng đồng thương mại điện tử lớn nhất Việt Nam.
-
-Shopee không ngừng đổi mới với các tính năng như Shopee Live, Shopee Mall, ShopeePay, và nhiều chương trình khuyến mãi hấp dẫn, mang lại trải nghiệm mua sắm tuyệt vời cho người dùng.`
+        intro: `
+<h2 class="text-2xl font-bold mt-2 mb-3 scroll-mt-20">Về Shopee Vietnam</h2>
+<p>
+  Nền tảng TMĐT (Sea Group), ra mắt 2015, dẫn đầu Việt Nam và khu vực.
+</p>
+<h3 class="text-xl font-semibold mt-6 mb-2">Mô hình</h3>
+<ul>
+  <li>C2C (Consumer to Consumer)</li>
+  <li>B2C (Business to Consumer)</li>
+  
+</ul>
+<p>2 triệu+ người bán, hàng chục triệu người mua. Shopee Live, Shopee Mall, ShopeePay...</p>
+`
     },
     {
         address: "Tầng 6, Tòa nhà Diamond Plaza, 34 Lê Duẩn, Quận 1, TP.HCM",
