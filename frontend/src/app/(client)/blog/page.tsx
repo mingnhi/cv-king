@@ -21,7 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { blogArticles } from "./data";
+// import { blogArticles } from "./data";
+import { BlogArticle, blogArticles } from "@/faker/data";
 
 type SortKey = "newest" | "popular" | "comments" | "oldest";
 
