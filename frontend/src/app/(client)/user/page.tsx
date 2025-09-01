@@ -1,10 +1,9 @@
 import JobSeekerDashboard from "@/components/ui/client/user/JobSeekerDashboard";
+import  'react';
 const UserPage = () => {
     return (
         <>
-            <div className="w-[1520px] mx-auto">
                 <JobSeekerDashboard />
-            </div>
         </>
     );
 };
