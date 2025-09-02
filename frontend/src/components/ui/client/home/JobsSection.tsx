@@ -8,7 +8,7 @@ import {  Bookmark, Briefcase, Clock, DollarSign, Eye, MapPin, Search, Upload } 
 import { useApp } from './AppContext';
 import { Badge } from "@/lib/badge";
 import { Button } from "../../button";
-import { Card, CardContent } from "@/lib/card";
+import { Card , CardContent } from "../../common/card";
 const JobsSection = () => {
     const jobs = [
         {

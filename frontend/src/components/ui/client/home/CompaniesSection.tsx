@@ -1,6 +1,6 @@
 "use client";
-import { CardContent, Card } from "@/lib/card";
 import { Button } from "@/lib/button";
+import { Card , CardContent } from "../../common/card";
 import { Badge } from "@/lib/badge";
 import { MapPin , Users , Star} from "lucide-react";
 import { ImageWithFallback } from "@/lib/ImageWithFallback";
