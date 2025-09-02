@@ -1,21 +1,46 @@
 "use client";
+
 import React, { useState } from "react";
-import { Button, Box, TextField } from "@mui/material";
-import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
+import {
+  Button,
+  Box,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Radio,
+} from "@mui/material";
+import { Lock, Mail, User, Eye, EyeOff, Building2 } from "lucide-react";
 import AuthSidebar from "@/components/layout/Sidebar/AuthSidebar";
 import Link from "next/link";
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [accountType, setAccountType] = useState<"job-seeker" | "employer">(
+    "job-seeker"
+  );
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
+  const handleAccountTypeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newType: "job-seeker" | "employer" | null
+  ) => {
+    if (newType !== null) {
+      setAccountType(newType);
+    }
+  };
 
   return (
     <Box className="flex flex-col md:grid md:grid-cols-12 min-h-screen">
       <AuthSidebar />
       <Box
-        className="col-span-12 lg:col-span-8 py-5 lg:py-12 px-4 md:px-8  xl:overflow-y-auto max-h-screen w-full"
+        className="col-span-12 lg:col-span-8 py-5 lg:py-12 px-4 md:px-8 xl:overflow-y-auto max-h-screen w-full"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         <Box className="max-w-xl mx-auto">
@@ -27,14 +52,63 @@ const Register: React.FC = () => {
             tưởng
           </span>
           <form className="my-8">
+            {/* Tabs for account type */}
+            <Box className="mb-6">
+              <p className="mb-2 text-sm text-gray-600">I want to:</p>
+              <div className="flex space-x-4 mt-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Radio
+                    size="small"
+                    value="job-seeker"
+                    checked={accountType === "job-seeker"}
+                    onChange={() => setAccountType("job-seeker")}
+                    sx={{
+                      color: "#fb923c",
+                      "&.Mui-checked": {
+                        color: "#fb923c",
+                      },
+                    }}
+                  />
+                  <span className="flex items-center text-sm text-gray-700">
+                    <User className="w-4 h-4 mr-2" />
+                    Find a job
+                  </span>
+                </label>
+
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <Radio
+                    size="small"
+                    value="employer"
+                    checked={accountType === "employer"}
+                    onChange={() => setAccountType("employer")}
+                    sx={{
+                      color: "#fb923c",
+                      "&.Mui-checked": {
+                        color: "#fb923c",
+                      },
+                    }}
+                  />
+                  <span className="flex items-center text-sm text-gray-700">
+                    <Building2 className="w-4 h-4 mr-2" />
+                    Hire talent
+                  </span>
+                </label>
+              </div>
+            </Box>
+
+            {/* Common Fields */}
             <Box className="mb-6">
               <TextField
                 fullWidth
                 id="fullname"
-                label="Fullname"
+                label={accountType === "employer" ? "Tên liên hệ" : "Họ và tên"}
                 type="text"
                 variant="outlined"
-                placeholder="Nhập họ và tên"
+                placeholder={
+                  accountType === "employer"
+                    ? "Nhập tên liên hệ"
+                    : "Nhập họ và tên"
+                }
                 className="hover:border focus:border [&_.MuiInputBase-root]:h-12 [&_.MuiInputBase-root]:!rounded-lg"
                 InputProps={{
                   startAdornment: (
@@ -43,6 +117,26 @@ const Register: React.FC = () => {
                 }}
               />
             </Box>
+
+            {accountType === "employer" && (
+              <Box className="mb-6">
+                <TextField
+                  fullWidth
+                  id="company"
+                  label="Tên công ty"
+                  type="text"
+                  variant="outlined"
+                  placeholder="Nhập tên công ty"
+                  className="hover:border focus:border [&_.MuiInputBase-root]:h-12 [&_.MuiInputBase-root]:!rounded-lg"
+                  InputProps={{
+                    startAdornment: (
+                      <Building2 className="text-orange-400 size-5 mr-2" />
+                    ),
+                  }}
+                />
+              </Box>
+            )}
+
             <Box className="mb-6">
               <TextField
                 fullWidth
@@ -59,11 +153,12 @@ const Register: React.FC = () => {
                 }}
               />
             </Box>
+
             <Box className="mb-6">
               <TextField
                 fullWidth
                 id="password"
-                label="Password"
+                label="Mật khẩu"
                 type={showPassword ? "text" : "password"}
                 variant="outlined"
                 placeholder="Nhập mật khẩu"
@@ -86,11 +181,13 @@ const Register: React.FC = () => {
             <Box className="mb-6">
               <TextField
                 fullWidth
-                id="password"
-                label="Password"
-                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                label="Xác nhận mật khẩu"
+                type={showConfirmPassword ? "text" : "password"}
                 variant="outlined"
-                placeholder="Nhập mật khẩu"
+                placeholder="Nhập lại mật khẩu"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="hover:border focus:border [&_.MuiInputBase-root]:h-12 [&_.MuiInputBase-root]:!rounded-lg"
                 InputProps={{
                   startAdornment: (
@@ -99,14 +196,52 @@ const Register: React.FC = () => {
                   endAdornment: (
                     <span
                       className="cursor-pointer text-gray-500 hover:text-orange-400"
-                      onClick={togglePasswordVisibility}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                     >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      {showConfirmPassword ? (
+                        <EyeOff size={20} />
+                      ) : (
+                        <Eye size={20} />
+                      )}
                     </span>
                   ),
                 }}
               />
             </Box>
+            <FormGroup className="mb-6">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                    sx={{
+                      color: "#fb923c",
+                      "&.Mui-checked": { color: "#fb923c" },
+                    }}
+                  />
+                }
+                label={
+                  <span className="text-sm text-gray-600">
+                    Tôi đồng ý với{" "}
+                    <button
+                      type="button"
+                      className="text-orange-400 hover:underline"
+                    >
+                      Điều khoản dịch vụ
+                    </button>{" "}
+                    và{" "}
+                    <button
+                      type="button"
+                      className="text-orange-400 hover:underline"
+                    >
+                      Chính sách bảo mật
+                    </button>
+                  </span>
+                }
+              />
+            </FormGroup>
 
             <Button
               fullWidth
@@ -122,8 +257,10 @@ const Register: React.FC = () => {
             >
               Đăng Ký
             </Button>
+
             <p className="text-center text-gray-400 py-3">Hoặc</p>
 
+            {/* Social Register Button */}
             <Box className="mb-4 relative flex gap-2">
               <Button
                 sx={{
@@ -178,7 +315,6 @@ const Register: React.FC = () => {
           <Box className="text-center text-gray-600 mt-5 border-t-1 pt-3">
             <p className="font-bold">Bạn gặp khó khăn khi tạo tài khoản?</p>
             <span className="text-xs">
-              {" "}
               Vui lòng gọi tới số <b className="text-orange-400">0974791817</b>
             </span>{" "}
             (giờ hành chính).
