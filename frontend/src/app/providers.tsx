@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { AppProvider } from "@/components/AppContext";
 
 const makeQueryClient = () => {
   return new QueryClient({
@@ -41,9 +42,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider>
       <BreadcrumbProvider>
         <QueryProvider>
+          <AppProvider>
           <>
             {children} <Toaster richColors />
-          </>
+            </>
+          </AppProvider>
         </QueryProvider>
       </BreadcrumbProvider>
     </ThemeProvider>
