@@ -9,7 +9,7 @@ const CompanyProfile = () => {
     const { navigateTo } = useApp();
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-[5px]">
                 <h1>Company Profile</h1>
                 <Button onClick={() => navigateTo('edit-profile')} className="bg-primary hover:bg-primary/90">
                     <Edit className="w-4 h-4 mr-2" />
