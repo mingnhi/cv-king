@@ -3,27 +3,19 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import {
-  Search,
   Calendar,
   Clock,
   Eye,
   MessageSquare,
   User,
+  SearchIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import {  Select as MSelect, Box, FormControl, InputLabel,   Paper, TextField, InputAdornment, MenuItem, Button  } from "@mui/material";
+
 
 // import { blogArticles } from "./data";
-import { BlogArticle, blogArticles } from "@/faker/data";
-
+import { blogArticles } from "@/faker/data";
 type SortKey = "newest" | "popular" | "comments" | "oldest";
 
 const fmtDate = (d: string) =>
@@ -122,34 +114,67 @@ const BlogPage = () => {
         </div>
 
         {/* Search + Sort */}
-        <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 mb-8">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  placeholder="Search articles, topics, or tags..."
-                  className="pl-10 h-12 rounded-lg"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="md:w-56">
-              <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortKey)}>
-                <SelectTrigger className="h-12 rounded-lg">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="comments">Most Commented</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
+        <Paper
+          elevation={0}
+          sx={{
+            borderRadius: 3,
+            border: 1,
+            borderColor: "divider",
+            p: { xs: 2.5, md: 3 },
+            mb: 4,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              mx: -1,
+              "& > *": { px: 1, mb: 2 },
+            }}
+          >
+            <Box sx={{ flex: { xs: "100%", md: 1 }, minWidth: 0 }}>
+              <TextField
+                fullWidth
+                placeholder="Search articles, topics, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon size={20} color="#9ca3af" />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": { borderRadius: 2 },
+                  height: 48,
+                }}
+              />
+            </Box>
+            <Box sx={{ flex: { xs: "100%", md: "0 0 auto" } }}>
+              <FormControl sx={{ minWidth: 224 }}>
+                <InputLabel id="sort-label">Sort by</InputLabel>
+                <MSelect
+                  labelId="sort-label"
+                  label="Sort by"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortKey)}
+                  MenuProps={{
+                    disableScrollLock: true,
+                    keepMounted: true,
+                    PaperProps: { sx: { minWidth: 224 } },
+                  }}
+                  sx={{ borderRadius: 2, height: 48 }}
+                >
+                  <MenuItem value="newest">Newest First</MenuItem>
+                  <MenuItem value="popular">Most Popular</MenuItem>
+                  <MenuItem value="comments">Most Commented</MenuItem>
+                  <MenuItem value="oldest">Oldest First</MenuItem>
+                </MSelect>
+              </FormControl>
+            </Box>
+          </Box>
+        </Paper>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main (bên trái) */}
@@ -226,9 +251,9 @@ const BlogPage = () => {
                                 <div className="text-xs text-gray-500">Career Coach</div>
                               </div>
                             </div>
-                            <Button variant="ghost" className="px-0 text-orange-600 hover:text-orange-700">
-                              Read More →
-                            </Button>
+                            <Button variant="text" color="warning">
+                                Read More →
+                              </Button>
                           </div>
                         </div>
                       </div>
@@ -272,9 +297,9 @@ const BlogPage = () => {
                               <div className="text-xs text-gray-500">Career Counselor</div>
                             </div>
                           </div>
-                          <Button variant="ghost" className="px-0 text-orange-600 hover:text-orange-700">
-                            Read More →
-                          </Button>
+                           <Button variant="text" color="warning">
+                                Read More →
+                              </Button>
                         </div>
                       </div>
                     </article>
