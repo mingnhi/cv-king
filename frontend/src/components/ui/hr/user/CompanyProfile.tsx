@@ -10,10 +10,10 @@ const CompanyProfile = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between mt-[5px]">
-                <h1>Company Profile</h1>
+                <h1>Thông tin công ty</h1>
                 <Button onClick={() => navigateTo('edit-profile')} className="bg-primary hover:bg-primary/90">
                     <Edit className="w-4 h-4 mr-2" />
-                    Edit Profile
+                    Edit
                 </Button>
             </div>
 
@@ -25,15 +25,15 @@ const CompanyProfile = () => {
                         </div>
                         <div className="flex-1">
                             <h2>TechCorp Vietnam</h2>
-                            <p className="text-gray-600 mb-4">Leading software development company in Vietnam</p>
+                            <p className="text-gray-600 mb-4">Công ty phát triển phần mềm hàng đầu tại Việt Nam</p>
 
                             <div className="grid md:grid-cols-2 gap-6 mb-6">
                                 <div>
-                                    <h3 className="mb-3">Company Information</h3>
+                                    <h3 className="mb-3">Thông tin công ty</h3>
                                     <div className="space-y-2 text-sm">
-                                        <p><span className="font-medium">Industry:</span> Information Technology</p>
-                                        <p><span className="font-medium">Company Size:</span> 100-500 employees</p>
-                                        <p><span className="font-medium">Founded:</span> 2015</p>
+                                        <p><span className="font-medium">Ngành:</span> Công Nghệ Thông Tin</p>
+                                        <p><span className="font-medium">Quy mô:</span> 100-500 Nhân viên</p>
+                                        <p><span className="font-medium">Thành lập:</span> 2015</p>
                                         <p><span className="font-medium">Website:</span>
                                             <button className="text-primary hover:underline ml-1">www.techcorp.vn</button>
                                         </p>
@@ -41,11 +41,11 @@ const CompanyProfile = () => {
                                 </div>
 
                                 <div>
-                                    <h3 className="mb-3">Contact Details</h3>
+                                    <h3 className="mb-3">Thông tin liên hệ</h3>
                                     <div className="space-y-2 text-sm">
-                                        <p><span className="font-medium">Address:</span> District 1, Ho Chi Minh City</p>
-                                        <p><span className="font-medium">Phone:</span>
-                                            <button className="text-primary hover:underline ml-1">+84 123 456 789</button>
+                                        <p><span className="font-medium">Địa chỉ:</span> Quận 1, Thành phố Hồ Chí Minh</p>
+                                        <p><span className="font-medium">Số điện thoại:</span>
+                                            <button className="text-primary hover:underline ml-1">0123 456 789</button>
                                         </p>
                                         <p><span className="font-medium">Email:</span>
                                             <button className="text-primary hover:underline ml-1">hr@techcorp.vn</button>
@@ -55,12 +55,11 @@ const CompanyProfile = () => {
                             </div>
 
                             <div>
-                                <h3 className="mb-3">About Us</h3>
+                                <h3 className="mb-3">Về chúng tôi</h3>
                                 <p className="text-gray-600 leading-relaxed">
-                                    TechCorp Vietnam is a leading software development company specializing in web and mobile applications.
-                                    We work with clients across various industries to deliver innovative digital solutions that drive business growth.
-                                    Our team of experienced developers, designers, and project managers is passionate about creating high-quality software
-                                    that makes a real difference.
+                                    TechCorp Vietnam là công ty phát triển phần mềm hàng đầu chuyên về ứng dụng web và di động.
+                                    Chúng tôi hợp tác với khách hàng trong nhiều ngành nghề khác nhau để cung cấp các giải pháp kỹ thuật số sáng tạo, thúc đẩy tăng trưởng kinh doanh.
+                                    Đội ngũ các nhà phát triển, nhà thiết kế và quản lý dự án giàu kinh nghiệm của chúng tôi luôn tâm huyết với việc tạo ra những phần mềm chất lượng cao, tạo nên sự khác biệt thực sự.
                                 </p>
                             </div>
                         </div>
@@ -70,19 +69,19 @@ const CompanyProfile = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Company Benefits</CardTitle>
+                    <CardTitle>Lợi ích của công ty</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="grid md:grid-cols-2 gap-4">
                         {[
-                            'Competitive salary and bonuses',
-                            'Flexible working hours',
-                            'Health insurance',
-                            'Annual leave and sick leave',
-                            'Professional development opportunities',
-                            'Modern office environment',
-                            'Team building activities',
-                            'Work from home options'
+                            'Lương và thưởng cạnh tranh',
+                            'Giờ làm việc linh hoạt',
+                            'Bảo hiểm y tế',
+                            'Nghỉ phép và nghỉ ốm',
+                            'Cơ hội phát triển chuyên môn',
+                            'Môi trường văn phòng hiện đại',
+                            'Hoạt động xây dựng đội nhóm',
+                            'Lựa chọn làm việc tại nhà'
                         ].map((benefit) => (
                             <div key={benefit} className="flex items-center space-x-2">
                                 <CheckCircle className="w-4 h-4 text-green-600" />
