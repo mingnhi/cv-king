@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import employee from "@/assets/images/employee.png";
-import {  Bookmark, Briefcase, Clock, DollarSign, Eye, MapPin, Search, Upload } from "lucide-react";
+import { Bookmark, Briefcase, Clock, DollarSign, Eye, MapPin, Search, Upload } from "lucide-react";
 
-import { useApp } from './AppContext';
+import { useApp } from "@/components/AppContext";
 import { Badge } from "@/lib/badge";
-import { Button } from "../../button";
+import { Button } from "@/lib/button";
 import { Card, CardContent } from "@/lib/card";
 const JobsSection = () => {
     const jobs = [
@@ -103,23 +103,25 @@ const JobsSection = () => {
         },
     ];
 
-    const handleJobClick = (jobs: any) => {
+    const { navigateTo } = useApp();
+
+    const handleJobClick = (job: any) => {
         navigateTo('jobs-detail', { job });
     };
 
-    const handleApplyClick = (e: React.MouseEvent, jobs: any) => {
+    const handleApplyClick = (e: React.MouseEvent, job: any) => {
         e.stopPropagation();
         // Check if user is logged in
         navigateTo('jobs-detail', { job });
     };
 
-    const handleSaveJob = (e: React.MouseEvent, jobs: any) => {
+    const handleSaveJob = (e: React.MouseEvent, job: any) => {
         e.stopPropagation();
         // Handle save jobs functionality
-        alert(`Job "${jobs.title}" saved to your list!`);
+        alert(`Job "${job.title}" saved to your list!`);
     }; return (
-        <section className="py-16 bg-gray-50">
-            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl mb-4 text-gray-900">Featured Jobs</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
@@ -127,11 +129,12 @@ const JobsSection = () => {
                     </p>
                 </div>
 
+                {/* Featured Jobs - 6 cards in 2x3 grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     {jobs.map((job) => (
                         <Card
                             key={job.id}
-                            className=" group hover:shadow-background transition-all duration-300 border-gray-100 shadow-md cursor-pointer"
+                            className="group hover:shadow-lg transition-all duration-300 border-gray-100 shadow-md cursor-pointer"
                             onClick={() => handleJobClick(job)}
                         >
                             <CardContent className="p-6">
@@ -152,17 +155,17 @@ const JobsSection = () => {
                                         </div>
                                     </div>
                                     <Button
-                                        variant="outlined"
-                                        size="small"
+                                        variant="outline"
+                                        size="sm"
                                         className="text-gray-400 hover:text-orange-600"
-                                        onClick={(e) => handleSaveJob(e, job)}
+                                        onClick={() => handleSaveJob({} as React.MouseEvent, job)}
                                     >
                                         <Bookmark className="h-4 w-4" />
                                     </Button>
                                 </div>
 
-                                <div className="space-y-2 mb-4 ">
-                                    <div className="flex items-center text-sm text-gray-500 ml-3.5">
+                                <div className="space-y-2 mb-4">
+                                    <div className="flex items-center text-sm text-gray-500">
                                         <MapPin className="h-4 w-4 mr-2" />
                                         {job.location}
                                     </div>
@@ -178,27 +181,24 @@ const JobsSection = () => {
 
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {job.tags.map((tag) => (
-                                        <Badge key={tag} variant="secondary" className="text-xs bg-orange-100 text-orange-700">
-                                            {tag}
-                                        </Badge>
+                                        <Badge key={tag} label={tag} variant="secondary" className="text-xs bg-orange-500 text-white font-medium" />
                                     ))}
                                 </div>
 
-                                <div className="flex items-center max-w-full justify-between">
+                                <div className="flex items-center justify-between">
                                     <Badge
+                                        label={job.type}
                                         variant={job.type === 'Toàn thời gian' ? 'default' : 'outline'}
                                         className={job.type === 'Toàn thời gian' ? 'bg-green-100 text-green-700' : ''}
-                                    >
-                                        {job.type}
-                                    </Badge>
+                                    />
                                     <Button
                                         size="sm"
-                                        className="text-white group-hover:bg-orange-600 transition-colors"
-                                        style={{ backgroundColor: '#f26b38' }}
-                                        onClick={(e) => handleApplyClick(e, job)}
+                                        className="text-white bg-[#f26b38] hover:bg-orange-600 transition-colors"
+                                        onClick={() => handleApplyClick({} as React.MouseEvent, job)}
                                     >
                                         Apply Now
-                                    </Button> </div>
+                                    </Button>
+                                </div>
                             </CardContent>
                         </Card>
                     ))}
