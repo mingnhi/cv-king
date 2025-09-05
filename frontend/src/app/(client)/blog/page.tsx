@@ -9,19 +9,21 @@ import {
   Eye,
   MessageSquare,
   User,
+  SearchIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/select";
 
-import { blogArticles } from "./data";
+import { blogArticles } from "@/faker/data";
+import { Box, InputBase, MenuItem } from "@mui/material";
 
 type SortKey = "newest" | "popular" | "comments" | "oldest";
 
@@ -121,7 +123,64 @@ const BlogPage = () => {
         </div>
 
         {/* Search + Sort */}
-        <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 mb-8">
+        <Box
+          sx={{
+            bgcolor: "white",
+            borderRadius: 2,
+            boxShadow: 1,
+            border: "1px solid #e5e7eb",
+            p: { xs: 2, md: 3 },
+            mb: 4,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            {/* Ô search */}
+            <Box sx={{ flex: 1, position: "relative" }}>
+              <SearchIcon
+                style={{
+                  position: "absolute",
+                  left: 12,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "gray",
+                  fontSize: 20,
+                }}
+              />
+              <InputBase
+                placeholder="Search articles, topics, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                sx={{
+                  pl: 5,
+                  height: 48,
+                  borderRadius: 2,
+                  border: "1px solid #e5e7eb",
+                  width: "100%",
+                }}
+              />
+            </Box>
+
+            {/* Ô select */}
+            <Box sx={{ width: 220 }}>
+              <Select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortKey)}
+              >
+                <MenuItem value="newest">Newest First</MenuItem>
+                <MenuItem value="popular">Most Popular</MenuItem>
+                <MenuItem value="comments">Most Commented</MenuItem>
+                <MenuItem value="oldest">Oldest First</MenuItem>
+              </Select>
+            </Box>
+          </Box>
+        </Box>
+        {/* <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -148,7 +207,7 @@ const BlogPage = () => {
               </Select>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main (bên trái) */}
