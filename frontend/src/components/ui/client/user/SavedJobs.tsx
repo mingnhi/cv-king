@@ -7,11 +7,14 @@ import {
     Clock,
     Trash2,
     Building2,
+    Route,
 } from 'lucide-react';
 import { Button } from '../../common/button';
 import { Badge } from '../../common/badge';
+import { useRouter } from 'next/navigation';
 
 const SavedJobs = () => {
+    const router = useRouter();
     const mockSavedJobs = [
         {
             id: 1,
@@ -51,17 +54,16 @@ const SavedJobs = () => {
             type: 'Full-time',
             experience: '2-5 years'
         };
-        navigateTo('job-detail', { job: jobDetail });
+        router.push('user/a/job-detail')
     };
 
                 return (
                     <div className="space-y-6">
                         <div className="flex items-center justify-between">
-                            <h1>Saved Jobs ({mockSavedJobs.length})</h1>
+                            <h1>Việc đã lưu ({mockSavedJobs.length})</h1>
                             <Button variant="outline" onClick={() => navigateTo('jobs')}>
                                 <Search className="w-4 h-4 mr-2" />
-                                Browse More Jobs
-                            </Button>
+                                Tìm việc                             </Button>
                         </div>
 
                         <div className="space-y-4">
@@ -103,11 +105,11 @@ const SavedJobs = () => {
                                             </div>
                                             <div className="flex flex-col space-y-2 ml-4">
                                                 <Button size="sm" onClick={() => handleApplyToJob(job)} className="bg-primary hover:bg-primary/90">
-                                                    Apply Now
+                                                 Ứng tuyển ngay
                                                 </Button>
                                                 <Button variant="outline" size="sm" onClick={() => handleRemoveSavedJob(job.id)}>
                                                     <Trash2 className="w-4 h-4 mr-2" />
-                                                    Remove
+                                                    Loại bỏ 
                                                 </Button>
                                             </div>
                                         </div>

@@ -17,7 +17,7 @@ const CompaniesSection = () => {
   id: 1,
   name: 'TechCorp Innovation',
   logo: company,
-  industry: 'Technology',
+  industry: 'Technology1',
   location: 'Ho Chi Minh City',
   employees: '500-1000',
   rating: 4.8,

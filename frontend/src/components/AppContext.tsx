@@ -1,6 +1,13 @@
 "use client";
+import HomePage from '@/app/(client)/(home)/page';
 import { createContext, useContext, useReducer, ReactNode } from 'react';
-
+import JobDetailPage from './ui/client/user/JobDetailPage';
+import JobsPage from '@/app/(client)/job/[slug]/page';
+import CompanyDetailPage from '@/app/(client)/(company)/[slug]/page';
+import DefaultPage from './ui/client/user/DefaultPage';
+import EditProfile from './ui/client/user/EditProfile';
+import JobSeekerDashboard from './ui/client/user/JobSeekerDashboard';
+import { useRouter } from 'next/navigation';
 interface User {
   id: string;
   name: string;
@@ -88,7 +95,6 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return state;
   }
 };
-
 export const useApp = () => {
   const context = useContext(AppContext);
   if (!context) {
@@ -97,14 +103,60 @@ export const useApp = () => {
   return context;
 };
 
+const AppContent = () => {
+    const {state} = useApp();
+ const renderPage = () => {
+    switch (state.currentPage) {
+      case 'home':
+        return <HomePage />;
+      case 'jobs':
+        return <JobsPage />;
+      case 'job-detail':
+        return <JobDetailPage />;
+      case 'companies':
+        return <CompanyDetailPage />;
+      case 'company-detail':
+        return <DefaultPage />;
+      case 'cv':
+        return <DefaultPage/>;
+      case 'post-job':
+        return <DefaultPage />;
+      case 'blog':
+        return <DefaultPage />;
+      case 'blog-detail':
+        return <DefaultPage />;
+      case 'login':
+        return <DefaultPage />;
+      case 'register':
+        return <DefaultPage />;
+      case 'dashboard':
+        return <JobSeekerDashboard />;
+      case 'employer-dashboard':
+        return <DefaultPage />;
+      case 'about':
+        return <DefaultPage />;
+      case 'contact':
+        return <DefaultPage />;
+      case 'terms':
+        return <DefaultPage />;
+      case 'privacy':
+        return <DefaultPage />;
+      case 'edit-profile':
+        return <EditProfile />;
+      default:
+        return <HomePage />;
+    }
+  };
+
+}
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(appReducer, {
     currentPage: 'home',
     isLoggedIn: false,
   });
+        const router = useRouter();
 
-  const navigateTo = (page: string, data?: any) => {
-    // Handle page navigation with data
+  const navigateTo = (path: string, data?: any) => {
     if (data?.job) {
       dispatch({ type: 'SET_JOB', payload: data.job });
     }
@@ -120,10 +172,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     if (data?.filters) {
       dispatch({ type: 'SET_FILTERS', payload: data.filters });
     }
-    
-    dispatch({ type: 'SET_PAGE', payload: page });
-  };
+    router.push(path);
+    };
 
+ 
   const setUser = (user: User) => {
     dispatch({ type: 'SET_USER', payload: user });
   };

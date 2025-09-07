@@ -3,21 +3,7 @@
 import { ArrowRight } from "lucide-react";
 
 import React, { useState, useRef } from "react";
-import { Box, ClickAwayListener, Portal, Paper } from "@mui/material";
 import { Button } from "@/components/ui/button"
-import {
-    BriefcaseBusiness,
-    ChartNoAxesCombined,
-    ChevronsRight,
-    List,
-    Search,
-} from "lucide-react";
-import HeroSlider from "@/components/ui/common/HeroSlider";
-
-import ImageBanner1 from "@/assets/images/banner5.png";
-import ImageBanner2 from "@/assets/images/banner6.png";
-import ImageBanner3 from "@/assets/images/banner7.png";
-import image from "@/assets/images/banner11.png";
 import Link from "next/link";
 
 const SearchSection: React.FC = () => {

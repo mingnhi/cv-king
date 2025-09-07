@@ -14,7 +14,7 @@ const JobsSection = () => {
         {
             id: 1,
             title: "Chuyên viên Backend Python",
-            company: "Công ty DevPro",
+            company: "Công ty DevPro1",
             logo: employee,
             location: "Hà Nội",
             salary: "40.000.000 - 60.000.000 VND",
