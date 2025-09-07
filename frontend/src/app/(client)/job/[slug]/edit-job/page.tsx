@@ -1,51 +1,41 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// app/job-postings/[slug]/edit/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { notFound, useParams } from "next/navigation";
 import BasicDetailsSection from "@/components/ui/client/job/post-job/sections/BasicDetailsSection";
 import JobContentSection from "@/components/ui/client/job/post-job/sections/JobDetailsSection";
 import SkillsSection from "@/components/ui/client/job/post-job/sections/SkillsSection";
 import ApplicationSection from "@/components/ui/client/job/post-job/sections/ApplicationSection";
 import RightSidebarPanel from "@/components/ui/client/job/post-job/SidebarPanel";
 import { Job } from "@/types/job.type";
+import { jobs } from "@/faker/jobposting-data"; 
 
-export default function PostJobPage() {
-const [form, setForm] = useState<Job>({
-  slug: "",
-  title: "",
-  company: "",
-  location: "",
-  type: "",               
-  mode: "",                 
-  level: "",             
-  salaryMin: "",
-  salaryMax: "",
-  salaryCurrency: "USD",  
-  description: "",
-  requirements: "",
-  benefits: "",
-  deadline: "",         
-  email: "",
-  urgent: false,
-  featured: false,
-  expires: "",              
-  status: "draft",       
-  skills: [],
-});
+export default function EditJobPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const job = useMemo(() => jobs.find((j) => j.slug === slug), [slug]);
 
-  const [skills, setSkills] = useState<string[]>([]);
+  if (!job) notFound();
+
+  const [form, setForm] = useState<Job>(job as Job);
+
+  useEffect(() => {
+    if (job) setForm(job);
+  }, [job]);
 
   const onChangeText = (name: keyof Job, value: string) =>
     setForm((prev) => ({ ...prev, [name]: value }));
 
   const onChangeSelect = (name: keyof Job, value: string) =>
-    setForm((prev) => ({ ...prev, [name]: value as Job[typeof name] }));
+    setForm((prev) => ({ ...prev, [name]: value as any }));
 
   const onToggle = (name: keyof Job, value: boolean) =>
-    setForm((prev) => ({ ...prev, [name]: value as Job[typeof name] }));
+    setForm((prev) => ({ ...prev, [name]: value as any }));
 
-  const handleSubmit = (draft: boolean) => {
-    const payload = { ...form, skills, status: draft ? "draft" : "active" };
-    console.log(draft ? "Lưu bản nháp" : "Đăng tuyển", payload);
+  const handleSubmit = (isDraft: boolean) => {
+    const payload = { ...form, status: (isDraft ? "draft" : "active") as Job["status"] };
+    console.log(isDraft ? "Lưu nháp (edit)" : "Cập nhật (edit)", payload);
   };
 
   return (
@@ -59,13 +49,12 @@ const [form, setForm] = useState<Job>({
 
         <JobContentSection form={form} onChangeText={onChangeText} />
 
-        <SkillsSection skills={skills} onSkillsChange={setSkills} />
-
-        <ApplicationSection
-          form={form}
-          onChangeText={onChangeText}
-          onToggle={onToggle}
+        <SkillsSection
+          skills={form.skills}
+          onSkillsChange={(s) => setForm((p) => ({ ...p, skills: s }))}
         />
+
+        <ApplicationSection form={form} onChangeText={onChangeText} onToggle={onToggle} />
       </div>
 
       <RightSidebarPanel
