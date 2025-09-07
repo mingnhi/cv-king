@@ -1,71 +1,43 @@
-import { useState } from 'react';
-import {
-  Eye,
-  Pencil,
-  MapPin,
-  DollarSign,
-  CalendarDays,
-  Clock,
-  Users,
-} from 'lucide-react';
+// app/job-postings/page.tsx
+"use client";
 
-const jobs = [
-  {
-    id: 1,
-    title: 'Senior Frontend Developer',
-    location: 'Ho Chi Minh City',
-    salary: '$2000 - $3000',
-    posted: '2024-01-15',
-    expires: '2024-02-15',
-    status: 'active',
-    applications: 24,
-    views: 156,
-  },
-  {
-    id: 2,
-    title: 'UI/UX Designer',
-    location: 'Hanoi',
-    salary: '$1200 - $2000',
-    posted: '2024-01-10',
-    expires: '2024-02-10',
-    status: 'active',
-    applications: 18,
-    views: 89,
-  },
-  {
-    id: 3,
-    title: 'Backend Developer',
-    location: 'Da Nang',
-    salary: '$1800 - $2800',
-    posted: '2023-12-20',
-    expires: '2024-01-20',
-    status: 'expired',
-    applications: 32,
-    views: 203,
-  },
-];
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { Eye, Pencil, MapPin, DollarSign, CalendarDays, Clock, Users } from "lucide-react";
+import { jobs } from "@/faker/jobposting-data"; 
+import { JobStatus } from "@/types/job.type";
 
-const tabs = ['all', 'active', 'draft', 'expired'];
+const tabs: (JobStatus | "all")[] = ["all", "active", "draft", "expired"];
 
-const JobPostings = () => {
-  const [selectedTab, setSelectedTab] = useState('all');
+function formatSalary(min?: string, max?: string, cur: "USD" | "VND" = "USD") {
+  if (!min && !max) return "Negotiable";
+  const s = cur === "VND" ? "đ" : "$";
+  const a = min ? `${s}${min}` : "";
+  const b = max ? `${s}${max}` : "";
+  return a && b ? `${a} - ${b}` : a || b;
+}
 
-  const filteredJobs =
-    selectedTab === 'all'
-      ? jobs
-      : jobs.filter((job) => job.status === selectedTab);
+export default function JobPostings() {
+  const router = useRouter();
+  const [selectedTab, setSelectedTab] = useState<(typeof tabs)[number]>("all");
 
-  const getCount = (status: string) => {
-    if (status === 'all') return jobs.length;
-    return jobs.filter((job) => job.status === status).length;
-  };
+  const filteredJobs = useMemo(
+    () => (selectedTab === "all" ? jobs : jobs.filter((j) => j.status === selectedTab)),
+    [selectedTab]
+  );
+
+  const getCount = (status: (typeof tabs)[number]) =>
+    status === "all" ? jobs.length : jobs.filter((j) => j.status === status).length;
 
   return (
     <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">Job Postings ({getCount('all')})</h1>
-        <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition">
+        <h1 className="text-2xl font-semibold">Job Postings ({getCount("all")})</h1>
+        <button
+          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+          onClick={() => router.push("/job/post-job")}
+        >
           + Post New Job
         </button>
       </div>
@@ -77,15 +49,13 @@ const JobPostings = () => {
             key={tab}
             onClick={() => setSelectedTab(tab)}
             className={`px-4 py-2 rounded-full border text-sm font-medium ${
-              selectedTab === tab
-                ? 'bg-gray-800 text-white'
-                : 'bg-gray-100 text-gray-600'
+              selectedTab === tab ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-600"
             }`}
           >
-            {tab === 'all' && `All Jobs (${getCount('all')})`}
-            {tab === 'active' && `Active (${getCount('active')})`}
-            {tab === 'draft' && `Draft (${getCount('draft')})`}
-            {tab === 'expired' && `Expired (${getCount('expired')})`}
+            {tab === "all" && `All Jobs (${getCount("all")})`}
+            {tab === "active" && `Active (${getCount("active")})`}
+            {tab === "draft" && `Draft (${getCount("draft")})`}
+            {tab === "expired" && `Expired (${getCount("expired")})`}
           </button>
         ))}
       </div>
@@ -107,7 +77,7 @@ const JobPostings = () => {
                     </span>
                     <span className="flex items-center gap-1">
                       <DollarSign className="w-4 h-4" />
-                      {job.salary}
+                      {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)}
                     </span>
                     <span className="flex items-center gap-1">
                       <CalendarDays className="w-4 h-4" />
@@ -129,14 +99,15 @@ const JobPostings = () => {
                     </span>
                   </div>
                 </div>
+
                 <div className="flex space-x-2">
                   <span
                     className={`px-2 py-1 text-xs rounded-full font-medium ${
-                      job.status === 'active'
-                        ? 'bg-green-100 text-green-600'
-                        : job.status === 'expired'
-                        ? 'bg-red-100 text-red-600'
-                        : 'bg-gray-100 text-gray-500'
+                      job.status === "active"
+                        ? "bg-green-100 text-green-600"
+                        : job.status === "expired"
+                        ? "bg-red-100 text-red-600"
+                        : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {job.status.charAt(0).toUpperCase() + job.status.slice(1)}
@@ -146,11 +117,17 @@ const JobPostings = () => {
 
               {/* Action Buttons */}
               <div className="flex mt-4 space-x-2">
-                <button className="px-3 py-1 text-sm border rounded hover:bg-gray-100 flex items-center gap-1">
+                <button
+                  className="px-3 py-1 text-sm border rounded hover:bg-gray-100 flex items-center gap-1"
+                  onClick={() => router.push(`/job/${job.slug}`)}
+                >
                   <Eye className="w-4 h-4" />
                   View
                 </button>
-                <button className="px-3 py-1 text-sm border rounded hover:bg-gray-100 flex items-center gap-1">
+                <button
+                  className="px-3 py-1 text-sm border rounded hover:bg-gray-100 flex items-center gap-1"
+                  onClick={() => router.push(`/job/${job.slug}/edit-job`)}
+                >
                   <Pencil className="w-4 h-4" />
                   Edit
                 </button>
@@ -161,6 +138,4 @@ const JobPostings = () => {
       </div>
     </div>
   );
-};
-
-export default JobPostings;
+}
